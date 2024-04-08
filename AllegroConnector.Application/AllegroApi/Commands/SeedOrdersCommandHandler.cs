@@ -10,11 +10,11 @@ namespace AllegroConnector.Application.AllegroApi.Commands
 {
     internal class SeedOrdersCommandHandler : ICommandHandler<SeedOrdersCommand, CheckoutFormResponse>
     {
-        readonly IAllegroApiClient _allegroClient;
+        readonly IAllegroApiService _allegroClient;
         readonly IAllegroOrdersRepository _ordersRepository;
         readonly IAllegroOffersRepository _offersRepository;
 
-        public SeedOrdersCommandHandler(IAllegroApiClient allegroClient,
+        public SeedOrdersCommandHandler(IAllegroApiService allegroClient,
             IAllegroOrdersRepository repository,
             IAllegroOffersRepository offersRepository)
         {

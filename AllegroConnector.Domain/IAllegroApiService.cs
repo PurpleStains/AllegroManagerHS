@@ -4,7 +4,7 @@ using AllegroConnector.Domain.Responses;
 
 namespace AllegroConnector.Domain
 {
-    public interface IAllegroApiClient
+    public interface IAllegroApiService
     {
         Task<SaleOffersResponse> SaleOffers(string limit, string offset);
         Task<CategoryResponse> GetCategories();

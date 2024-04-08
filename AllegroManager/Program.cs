@@ -1,3 +1,4 @@
+using AllegroConnector.Application.AllegroApi;
 using AllegroConnector.Application.AllegroOAuth;
 using AllegroConnector.Infrastructure;
 using AllegroConnector.Infrastructure.Configuration;
@@ -28,20 +29,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AllegroContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddHttpClient<AllegroOAuthService>((serviceProvider, httpClient) =>
-{
-    var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{clientId}:{clientSecret}"));
-    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-    httpClient.BaseAddress = new Uri("https://allegro.pl/auth/oauth/");
-})
-.ConfigurePrimaryHttpMessageHandler(() =>
-{
-    return new SocketsHttpHandler
-    {
-        PooledConnectionLifetime = TimeSpan.FromMinutes(5),
-    };
-})
-.SetHandlerLifetime(Timeout.InfiniteTimeSpan);
+ConfigureHttpClients(builder.Services);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddCors(options =>
@@ -89,4 +77,36 @@ void InitializeModules(ILifetimeScope services)
 {
     var httpClientFactory = services.Resolve<IHttpClientFactory>();
     AllegroConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger);
+}
+
+void ConfigureHttpClients(IServiceCollection services)
+{
+    services.AddHttpClient<AllegroOAuthService>((serviceProvider, httpClient) =>
+    {
+        var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{clientId}:{clientSecret}"));
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+        httpClient.BaseAddress = new Uri("https://allegro.pl/auth/oauth/");
+    })
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        return new SocketsHttpHandler
+        {
+            PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+        };
+    })
+    .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
+
+    services.AddHttpClient<AllegroApiService>((serviceProvider, httpClient) =>
+    {
+        httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.allegro.public.v1+json");
+        httpClient.BaseAddress = new Uri("https://api.allegro.pl/");
+    })
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        return new SocketsHttpHandler
+        {
+            PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+        };
+    })
+    .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
 }

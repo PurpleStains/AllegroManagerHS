@@ -7,10 +7,10 @@ namespace AllegroConnector.Application.AllegroApi.Queries
 {
     internal class SaleOffersQueryHandler : IQueryHandler<SaleOffersQuery, SaleOffersResponse>
     {
-        readonly IAllegroApiClient _apiClient;
+        readonly IAllegroApiService _apiClient;
         readonly IAllegroOffersRepository _offersRepository;
 
-        public SaleOffersQueryHandler(IAllegroApiClient allegroApiClient, IAllegroOffersRepository offersRepository)
+        public SaleOffersQueryHandler(IAllegroApiService allegroApiClient, IAllegroOffersRepository offersRepository)
         {
             _apiClient = allegroApiClient;
             _offersRepository = offersRepository;

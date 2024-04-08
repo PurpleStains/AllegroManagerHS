@@ -41,7 +41,6 @@ namespace AllegroConnector.Infrastructure.Configuration
             ILogger logger)
         {
             var containerBuilder = new ContainerBuilder();
-
             containerBuilder.RegisterModule(new LoggingModule(logger.ForContext("Module", "AllegroConnector")));
 
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
@@ -50,8 +49,6 @@ namespace AllegroConnector.Infrastructure.Configuration
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new AllegroClientModule(clientId));
             //containerBuilder.RegisterModule(new AuthenticationModule());
-
-            //var domainNotificationsMap = new BiDictionary<string, Type>();
 
             containerBuilder.RegisterInstance(executionContextAccessor);
             RegisterMapper(containerBuilder);

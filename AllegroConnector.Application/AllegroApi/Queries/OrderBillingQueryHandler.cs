@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace AllegroConnector.Application.AllegroApi.Queries
 {
-    internal class OrderBillingQueryHandler(IAllegroApiClient apiClient, IAllegroOrdersRepository ordersRepository)
+    internal class OrderBillingQueryHandler(IAllegroApiService apiClient, IAllegroOrdersRepository ordersRepository)
         : IQueryHandler<OrdersBillingQuery, BillingEntries>
     {
         public async Task<BillingEntries> Handle(OrdersBillingQuery request, CancellationToken cancellationToken)

@@ -6,9 +6,9 @@ namespace AllegroConnector.Application.AllegroApi.Queries
 {
     internal class CategoriesQueryHandler : IQueryHandler<CategoriesQuery, CategoryResponse>
     {
-        private readonly IAllegroApiClient _apiClient;
+        private readonly IAllegroApiService _apiClient;
 
-        public CategoriesQueryHandler(IAllegroApiClient apiClient)
+        public CategoriesQueryHandler(IAllegroApiService apiClient)
         {
             _apiClient = apiClient;
         }

@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AllegroManager.Modules.Allegro
 {
-    public class AllegroConnectorController(IAllegroModule allegroModule) : ControllerBase
+    public class AllegroAuthorizationController(IAllegroModule allegroModule) : ControllerBase
     {
-        [HttpPost("getCode")]
+        [HttpPost("GetCode")]
         public async Task<IActionResult> GetCode()
         {
             var response = await allegroModule.ExecuteCommandAsync(new GetCodeCommand());
             return Ok(response);
         }
 
-        [HttpPost("auhorize")]
+        [HttpPost("Authorize")]
         public async Task<IActionResult> Authorize([FromBody] AuthorizeCommand command)
         {
             await allegroModule.ExecuteCommandAsync(command);

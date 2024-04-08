@@ -2,21 +2,15 @@
 
 namespace AllegroConnector.Infrastructure.Domain.AllegroOAuthToken
 {
-    internal class AllegroOAuthTokenHandler : IAllegroOAuthTokenHandler
+    internal class AllegroOAuthTokenHandler(IOAuthTokenRepository repository) : IAllegroOAuthTokenHandler
     {
-        private readonly IOAuthTokenRepository _repository;
         private string token;
 
-        public AllegroOAuthTokenHandler(IOAuthTokenRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public async Task<string> GetAccessToken()
+        public string GetAccessToken()
         {
             if (token is null)
             {
-                var result = await _repository.Get();
+                var result = repository.Get().Result;
                 token = result.AccessToken;
             }
 

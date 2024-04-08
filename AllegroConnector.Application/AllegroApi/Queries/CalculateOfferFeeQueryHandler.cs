@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace AllegroConnector.Application.AllegroApi.Queries
 {
-    internal class CalculateOfferFeeQueryHandler(IAllegroApiClient apiClient, IFeeCalculator<FeeCalculationBasis, FeeDetails> calculator) 
+    internal class CalculateOfferFeeQueryHandler(IAllegroApiService apiClient, IFeeCalculator<FeeCalculationBasis, FeeDetails> calculator) 
         : IQueryHandler<CalculateOfferFeeQuery, OffersFeeResponse>
     {
         public async Task<OffersFeeResponse> Handle(CalculateOfferFeeQuery query, CancellationToken cancellationToken)

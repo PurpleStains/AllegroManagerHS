@@ -6,9 +6,9 @@ namespace AllegroConnector.Application.AllegroApi.Queries
 {
     internal class OfferQueryHandler : IQueryHandler<OfferQuery, ConcreteProductOfferResponse>
     {
-        readonly IAllegroApiClient _apiClinet;
+        readonly IAllegroApiService _apiClinet;
 
-        public OfferQueryHandler(IAllegroApiClient apiClinet)
+        public OfferQueryHandler(IAllegroApiService apiClinet)
         {
             _apiClinet = apiClinet;
         }

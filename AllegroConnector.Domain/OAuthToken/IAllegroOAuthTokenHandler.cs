@@ -2,6 +2,6 @@
 {
     public interface IAllegroOAuthTokenHandler
     {
-        Task<string> GetAccessToken();
+        string GetAccessToken();
     }
 }
