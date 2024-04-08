@@ -18,11 +18,8 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/seweryn-sergjeiusz-3ab7b9214]
+
+[linkedin][https://www.linkedin.com/in/seweryn-sergjeiusz-3ab7b9214]
 
 
 <!-- TABLE OF CONTENTS -->
@@ -54,14 +51,15 @@
 
 ## About The Project
 
-Application focued to support e-commerce to calculate they incomes
+Application focusing on e-commerce to help them calculate they incomes
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [![.NET][.NET]][Net-url]
-* [![React][React.js]][React-url]
+* .NET 8.0
+* MediatR
+* AutoFac
+* EntityFramework
+* Serilog
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
