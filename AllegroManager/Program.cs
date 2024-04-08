@@ -11,7 +11,10 @@ using System.Text;
 
 Serilog.ILogger _logger = ConfigureLogger();
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var clientId = builder.Configuration["AllegroApi:ClientId"];
+var clientSecret = builder.Configuration["AllegroApi:ClientSecret"];
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -24,13 +27,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AllegroContext>(options =>
-    options.UseSqlServer(connectionString));
-
+builder.Services.AddDbContext<AllegroContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHttpClient<AllegroOAuthService>((serviceProvider, httpClient) =>
 {
-    var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{builder.Configuration["AllegroApi:ClientId"]}" +
-        $":{builder.Configuration["AllegroApi:ClientSecret"]}"));
+    var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{clientId}:{clientSecret}"));
     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
     httpClient.BaseAddress = new Uri("https://allegro.pl/auth/oauth/");
 })
@@ -42,7 +42,6 @@ builder.Services.AddHttpClient<AllegroOAuthService>((serviceProvider, httpClient
     };
 })
 .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
-
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddCors(options =>
@@ -89,5 +88,5 @@ Serilog.ILogger ConfigureLogger()
 void InitializeModules(ILifetimeScope services)
 {
     var httpClientFactory = services.Resolve<IHttpClientFactory>();
-    AllegroConnectorStartup.Initialize(connectionString, httpClientFactory, _logger);
+    AllegroConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger);
 }

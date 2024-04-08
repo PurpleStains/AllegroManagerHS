@@ -1,22 +1,11 @@
-﻿using AllegroConnector.Application.AllegroApi;
-using AllegroConnector.Application.AllegroAuthorization;
-using AllegroConnector.Application.AllegroOAuth;
-using AllegroConnector.BuildingBlocks.Application;
-using AllegroConnector.Domain;
-using AllegroConnector.Domain.FeeCalculations;
-using AllegroConnector.Domain.OAuthToken;
-using AllegroConnector.Infrastructure.Configuration.DataAccess;
+﻿using AllegroConnector.Infrastructure.Configuration.DataAccess;
 using AllegroConnector.Infrastructure.Configuration.HttpClient;
 using AllegroConnector.Infrastructure.Configuration.Logging;
 using AllegroConnector.Infrastructure.Configuration.Mapper;
 using AllegroConnector.Infrastructure.Configuration.Mediation;
-using AllegroConnector.Infrastructure.Domain.AllegroOAuthToken;
 using Autofac;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using System.Net.Http;
 
 namespace AllegroConnector.Infrastructure.Configuration
 {
@@ -25,7 +14,8 @@ namespace AllegroConnector.Infrastructure.Configuration
         static IContainer _container;
         public static void Initialize(
             string connectionString,
-            IHttpClientFactory executionContextAccessor,
+            string clientId,
+            IHttpClientFactory httpClientFactory,
             ILogger logger,
             //IEventsBus eventsBus,
             long? internalProcessingPoolingInterval = null)
@@ -34,7 +24,8 @@ namespace AllegroConnector.Infrastructure.Configuration
 
             ConfigureCompositionRoot(
                 connectionString,
-                executionContextAccessor,
+                clientId,
+                httpClientFactory,
                 moduleLogger);
         }
 
@@ -45,6 +36,7 @@ namespace AllegroConnector.Infrastructure.Configuration
 
         private static void ConfigureCompositionRoot(
             string connectionString,
+            string clientId,
             IHttpClientFactory executionContextAccessor,
             ILogger logger)
         {
@@ -56,7 +48,7 @@ namespace AllegroConnector.Infrastructure.Configuration
             //containerBuilder.RegisterModule(new ProcessingModule());
             //containerBuilder.RegisterModule(new EventsBusModule(eventsBus));
             containerBuilder.RegisterModule(new MediatorModule());
-            containerBuilder.RegisterModule(new AllegroClientModule());
+            containerBuilder.RegisterModule(new AllegroClientModule(clientId));
             //containerBuilder.RegisterModule(new AuthenticationModule());
 
             //var domainNotificationsMap = new BiDictionary<string, Type>();

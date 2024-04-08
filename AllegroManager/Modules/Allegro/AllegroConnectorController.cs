@@ -4,26 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AllegroManager.Modules.Allegro
 {
-    public class AllegroConnectorController : ControllerBase
+    public class AllegroConnectorController(IAllegroModule allegroModule) : ControllerBase
     {
-        readonly IAllegroModule _allegroModule;
-
-        public AllegroConnectorController(IAllegroModule allegroModule)
-        {
-            _allegroModule = allegroModule;
-        }
-
         [HttpPost("getCode")]
         public async Task<IActionResult> GetCode()
         {
-            var response = await _allegroModule.ExecuteCommandAsync(new GetCodeCommand());
+            var response = await allegroModule.ExecuteCommandAsync(new GetCodeCommand());
             return Ok(response);
         }
 
         [HttpPost("auhorize")]
         public async Task<IActionResult> Authorize([FromBody] AuthorizeCommand command)
         {
-            await _allegroModule.ExecuteCommandAsync(command);
+            await allegroModule.ExecuteCommandAsync(command);
             return Ok("Successfuly authorized");
         }
     }

@@ -4,16 +4,14 @@ using Newtonsoft.Json;
 
 namespace AllegroConnector.Application.AllegroOAuth
 {
-    public sealed class AllegroOAuthService(HttpClient _client) : IAllegroOAuthService
+    public sealed class AllegroOAuthService(HttpClient _client, string clientId) : IAllegroOAuthService
     {
-        private static readonly string ClientId = "bf60febe89224da9b379670e3ace98f5";
-
         public async Task<Result<AuthDeviceOAuth, AuthErrorResponse>> GetCode()
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "device");
             request.Content = new FormUrlEncodedContent([
                 new("Content-Type", "application/x-www-form-urlencoded"),
-                new("client_id", ClientId),
+                new("client_id", clientId)
             ]);
 
             var response = await _client.SendAsync(request);

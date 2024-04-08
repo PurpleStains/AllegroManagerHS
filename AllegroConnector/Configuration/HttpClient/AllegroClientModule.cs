@@ -8,17 +8,17 @@ using Autofac;
 
 namespace AllegroConnector.Infrastructure.Configuration.HttpClient
 {
-    internal class AllegroClientModule : Module
+    internal class AllegroClientModule(string clientId) : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder.Register(ctx =>
             {
                 var httpClientFactory = ctx.Resolve<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient(nameof(AllegroOAuthService)); // Use the named client
-                return new AllegroOAuthService(httpClient);
+                var httpClient = httpClientFactory.CreateClient(nameof(AllegroOAuthService));
+                return new AllegroOAuthService(httpClient, clientId);
             }).As<IAllegroOAuthService>();
-            //builder.RegisterType<AllegroOAuthService>().As<IAllegroOAuthService>();
+
             builder.RegisterType<AllegroApiClient>().AsSelf();
             builder.RegisterType<AllegroOAuthTokenHandler>()
                 .As<IAllegroOAuthTokenHandler>()
