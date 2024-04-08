@@ -1,0 +1,23 @@
+﻿using AllegroConnector.Application.Queries;
+using AllegroConnector.Domain;
+using AllegroConnector.Domain.Responses;
+
+namespace AllegroConnector.Application.AllegroApi.Queries
+{
+    internal class OfferQueryHandler : IQueryHandler<OfferQuery, ConcreteProductOfferResponse>
+    {
+        readonly IAllegroApiClient _apiClinet;
+
+        public OfferQueryHandler(IAllegroApiClient apiClinet)
+        {
+            _apiClinet = apiClinet;
+        }
+
+        public async Task<ConcreteProductOfferResponse> Handle(OfferQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _apiClinet.GetOffers(request.OfferId);
+
+            return result;
+        }
+    }
+}
