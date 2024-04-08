@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroConnector.Domain", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroConnector.Application", "..\AllegroConnector.Application\AllegroConnector.Application.csproj", "{B4AC61D7-71AA-47A0-B798-7AA46F466A4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroConnector.Database.Entity", "..\AllegroConnector.Database.Entity\AllegroConnector.Database.Entity.csproj", "{D97A370F-7E98-459B-8A01-EA4A090C5F90}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroConnector.BuildingBlocks.Application", "..\AllegroConnector.BuildingBlocks.Application\AllegroConnector.BuildingBlocks.Application.csproj", "{AD6DF174-5667-4A79-9530-DB58E41A66DF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroConnector.BuildingBlocks.Domain", "..\AllegroConnector.BuildingBlocks.Domain\AllegroConnector.BuildingBlocks.Domain.csproj", "{4675C2D6-23EE-4B67-95B9-E559BD7C2EBC}"
@@ -29,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroConnector.Integratio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2244E9FB-536F-4F1D-8373-386C0D287CD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllegroManager.AllegroConnectorTests", "..\AllegroManager.AllegroConnectorTests\AllegroManager.AllegroConnectorTests.csproj", "{73060D40-D7C8-4EF0-8E88-A32B3A74BB43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroManager.AllegroConnectorTests", "..\AllegroManager.AllegroConnectorTests\AllegroManager.AllegroConnectorTests.csproj", "{73060D40-D7C8-4EF0-8E88-A32B3A74BB43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +51,6 @@ Global
 		{B4AC61D7-71AA-47A0-B798-7AA46F466A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4AC61D7-71AA-47A0-B798-7AA46F466A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4AC61D7-71AA-47A0-B798-7AA46F466A4F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D97A370F-7E98-459B-8A01-EA4A090C5F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D97A370F-7E98-459B-8A01-EA4A090C5F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D97A370F-7E98-459B-8A01-EA4A090C5F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D97A370F-7E98-459B-8A01-EA4A090C5F90}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD6DF174-5667-4A79-9530-DB58E41A66DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD6DF174-5667-4A79-9530-DB58E41A66DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD6DF174-5667-4A79-9530-DB58E41A66DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,7 +80,6 @@ Global
 		{C2475043-A35B-433E-AB5F-4E36BB79DC93} = {513BE191-7372-4975-9356-FD798F98E5AB}
 		{E7F3AF4D-C379-4D5A-8508-CC0103C3010C} = {513BE191-7372-4975-9356-FD798F98E5AB}
 		{B4AC61D7-71AA-47A0-B798-7AA46F466A4F} = {513BE191-7372-4975-9356-FD798F98E5AB}
-		{D97A370F-7E98-459B-8A01-EA4A090C5F90} = {513BE191-7372-4975-9356-FD798F98E5AB}
 		{AD6DF174-5667-4A79-9530-DB58E41A66DF} = {50A17FFE-3C58-4656-A080-1FFB816FBAC2}
 		{4675C2D6-23EE-4B67-95B9-E559BD7C2EBC} = {50A17FFE-3C58-4656-A080-1FFB816FBAC2}
 		{66AE85ED-5FF8-4A7A-8A55-9C4387BFD3EB} = {50A17FFE-3C58-4656-A080-1FFB816FBAC2}
