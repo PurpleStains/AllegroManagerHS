@@ -1,12 +1,12 @@
 ﻿using AllegroConnector.Application.AllegroAuthorization;
-using AllegroConnector.BuildingBlocks.Domain;
+using FluentResults;
 using Newtonsoft.Json;
 
 namespace AllegroConnector.Application.AllegroOAuth
 {
     public sealed class AllegroOAuthService(HttpClient _client, string clientId) : IAllegroOAuthService
     {
-        public async Task<Result<AuthDeviceOAuth, AuthErrorResponse>> GetCode()
+        public async Task<Result<AuthDeviceOAuth>> GetCode()
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "device");
             request.Content = new FormUrlEncodedContent([
@@ -18,13 +18,13 @@ namespace AllegroConnector.Application.AllegroOAuth
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<AuthDeviceOAuth>(responseString);
+                return Result.Ok<AuthDeviceOAuth>(JsonConvert.DeserializeObject<AuthDeviceOAuth>(responseString));
             }
 
-            return new AuthErrorResponse() { error = "Failed to get code."};
+            return Result.Fail("Failed to get code.");
         }
 
-        public async Task<Result<AuthResponse, AuthErrorResponse>> GetAccessToken(int interval, string deviceCode, CancellationToken token)
+        public async Task<Result<AuthResponse>> GetAccessToken(int interval, string deviceCode, CancellationToken token)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "token");
             request.Content = new FormUrlEncodedContent([
@@ -35,10 +35,11 @@ namespace AllegroConnector.Application.AllegroOAuth
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<AuthResponse>(responseString);
+                return Result.Ok<AuthResponse>(JsonConvert.DeserializeObject<AuthResponse>(responseString));
             }
 
-            return JsonConvert.DeserializeObject<AuthErrorResponse>(responseString);
+            var errorResponse = JsonConvert.DeserializeObject<AuthErrorResponse>(responseString);
+            return Result.Fail(errorResponse.error_description);
         }
     }
 }

@@ -9,15 +9,26 @@ namespace AllegroManager.Modules.Allegro
         [HttpPost("GetCode")]
         public async Task<IActionResult> GetCode()
         {
-            var response = await allegroModule.ExecuteCommandAsync(new GetCodeCommand());
-            return Ok(response);
+            var result = await allegroModule.ExecuteCommandAsync(new GetCodeCommand());
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+
+            return Ok(result.Errors);
         }
 
         [HttpPost("Authorize")]
         public async Task<IActionResult> Authorize([FromBody] AuthorizeCommand command)
         {
-            await allegroModule.ExecuteCommandAsync(command);
-            return Ok("Successfuly authorized");
+            var result = await allegroModule.ExecuteCommandAsync(command);
+            if (result.IsSuccess)
+            {
+                return Ok("Successfuly authorized");
+            }
+
+            var error = result.Errors.First() as AuthorizationError;
+            return Ok(error);
         }
     }
 }

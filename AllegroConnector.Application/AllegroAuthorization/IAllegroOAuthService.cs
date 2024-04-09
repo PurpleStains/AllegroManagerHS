@@ -1,10 +1,10 @@
-﻿using AllegroConnector.BuildingBlocks.Domain;
+﻿using FluentResults;
 
 namespace AllegroConnector.Application.AllegroAuthorization
 {
     public interface IAllegroOAuthService
     {
-        Task<Result<AuthDeviceOAuth, AuthErrorResponse>> GetCode();
-        Task<Result<AuthResponse, AuthErrorResponse>> GetAccessToken(int interval, string deviceCode, CancellationToken token);
+        Task<Result<AuthDeviceOAuth>> GetCode();
+        Task<Result<AuthResponse>> GetAccessToken(int interval, string deviceCode, CancellationToken token);
     }
 }

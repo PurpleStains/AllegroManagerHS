@@ -19,4 +19,9 @@
     <ProjectReference Include="..\AllegroConnector.IntegrationEvents\AllegroConnector.IntegrationEvents.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>AllegroManager.AllegroConnector.Application</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>  
 </Project>
