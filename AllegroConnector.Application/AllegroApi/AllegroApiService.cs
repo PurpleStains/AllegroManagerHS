@@ -7,8 +7,6 @@ using AllegroConnector.Domain.Responses;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
-using Category = AllegroConnector.Domain.Models.Category;
-using Offer = AllegroConnector.Domain.Models.Offer;
 
 namespace AllegroConnector.Application.AllegroApi
 {
@@ -50,28 +48,12 @@ namespace AllegroConnector.Application.AllegroApi
             return offer;
         }
 
-        public async Task<CalculatedFeeResponse> CalculateOfferFee(string offerID)
+        public async Task<CalculatedFeeResponse> CalculateOfferFee(CalculateFeeRequest requestBody)
         {
-            var offerFromAllegro = await GetOffers(offerID);
-            var body = new CalculateFeeRequest()
-            {
-                offer = new Offer()
-                {
-                    fundraisingCampaign = null,
-                    category = new Category()
-                    {
-                        id = offerFromAllegro.category.id,
-                    },
-                    sellingMode = offerFromAllegro.sellingMode
-                },
-                classifiedsPackages = null,
-                marketplaceId = _marketPlace
-            };
-
             var request = new HttpRequestMessage(HttpMethod.Post, $"pricing/offer-fee-preview");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
-            request.Headers.Add("Content-Type", "application/vnd.allegro.public.v1+json");
-            request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+            request.Content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/vnd.allegro.public.v1+json");
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var offer = JsonConvert.DeserializeObject<CalculatedFeeResponse>(await response.Content.ReadAsStringAsync());

@@ -8,27 +8,17 @@ using System.Globalization;
 
 namespace AllegroConnector.Application.AllegroApi.Commands
 {
-    internal class SeedOrdersCommandHandler : ICommandHandler<SeedOrdersCommand, CheckoutFormResponse>
+    internal class SeedOrdersCommandHandler(IAllegroApiService allegroClient,
+            IAllegroOrdersRepository ordersRepository,
+            IAllegroOffersRepository offersRepository) : ICommandHandler<SeedOrdersCommand, CheckoutFormResponse>
     {
-        readonly IAllegroApiService _allegroClient;
-        readonly IAllegroOrdersRepository _ordersRepository;
-        readonly IAllegroOffersRepository _offersRepository;
-
-        public SeedOrdersCommandHandler(IAllegroApiService allegroClient,
-            IAllegroOrdersRepository repository,
-            IAllegroOffersRepository offersRepository)
-        {
-            _allegroClient = allegroClient;
-            _ordersRepository = repository;
-            _offersRepository = offersRepository;
-        }
 
         public async Task<CheckoutFormResponse> Handle(SeedOrdersCommand query, CancellationToken cancellationToken)
         {
-            var result = await _allegroClient.GetOrders(query.Limit, query.Offset);
+            var result = await allegroClient.GetOrders(query.Limit, query.Offset);
             foreach (var allegroOrder in result.checkoutForms)
             {
-                var billing = await _allegroClient.GetBillingForOrder(allegroOrder.Id);
+                var billing = await allegroClient.GetBillingForOrder(allegroOrder.Id);
                 var orderItems = await CreateOrderLineItems(allegroOrder.LineItems);
                 var order = Domain.Orders.Order.Create(allegroOrder.Id,
                     allegroOrder.Buyer.Email,
@@ -41,13 +31,13 @@ namespace AllegroConnector.Application.AllegroApi.Commands
                     allegroOrder.UpdatedAt);
                 order.AddOrderLineItems(orderItems);
 
-                if (await _ordersRepository.GetByIdAsync(order.Id) is null)
+                if (await ordersRepository.GetByIdAsync(order.Id) is null)
                 {
-                    await _ordersRepository.AddAsync(order);
+                    await ordersRepository.AddAsync(order);
                 }
             }
 
-            await _ordersRepository.Commit();
+            await ordersRepository.Commit();
             return result;
 
             string SumFee(List<BillingEntry> entries)
@@ -62,7 +52,7 @@ namespace AllegroConnector.Application.AllegroApi.Commands
             foreach (var item in items)
             {
                 var orderItem = Domain.Orders.OrderLineItem.Create(item.Id, item.Offer.id, item.Quantity.ToString());
-                var offer = await _offersRepository.GetByIdAsync(item.Offer.id);
+                var offer = await offersRepository.GetByIdAsync(item.Offer.id);
                 if (offer is not null)
                 {
                     orderItem.SetAllegroOffer(offer);

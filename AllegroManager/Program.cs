@@ -1,4 +1,5 @@
 using AllegroConnector.Application.AllegroApi;
+using AllegroConnector.Application.AllegroAuthorization;
 using AllegroConnector.Application.AllegroOAuth;
 using AllegroConnector.Infrastructure;
 using AllegroConnector.Infrastructure.Configuration;
