@@ -14,8 +14,13 @@ namespace AllegroConnector.Domain
                 Delimiter = ";",
             };
 
+            var file = new DirectoryInfo(path)
+                .GetFiles()
+                .OrderByDescending(x => x.CreationTime)
+                .First();
+
             List<T> result = new();
-            using (var reader = new StreamReader(path))
+            using (var reader = new StreamReader(file.FullName))
             using (var csv = new CsvReader(reader, config))
             {
                 result.AddRange(csv.GetRecords<T>());

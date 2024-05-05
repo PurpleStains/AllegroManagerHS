@@ -4,8 +4,8 @@ namespace AllegroConnector.Domain
 {
     public class CsvGenericWriter
     {
-        readonly string _productsCSV = "./AllegroAukcje/export.csv";
-        readonly string _productsWithPricesCSV = "./AllegroCeny/Test_1_2024-03-11_21_53.csv";
+        readonly string _productsCSV = "./AllegroAukcje";
+        readonly string _productsWithPricesCSV = "./AllegroCeny";
 
         public List<AuctionWithPriceAndEan> Products()
         {
