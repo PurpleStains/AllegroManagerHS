@@ -61,12 +61,13 @@ namespace AllegroConnector.Application.AllegroApi
 
         public async Task<CheckoutFormResponse> GetOrders(string limit, string offset)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "order/checkout-forms");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"order/checkout-forms?limit={limit}&offset={offset}");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
-            request.Content = new FormUrlEncodedContent([
-                new("limit", limit),
-                new("offset", offset)
-            ]);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+            //request.Content = new FormUrlEncodedContent([
+            //    new("limit", limit),
+            //    new("offset", offset)
+            //]);
 
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();

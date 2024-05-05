@@ -63,5 +63,12 @@ namespace AllegroManager.Modules.Allegro
             var response = await allegroModule.ExecuteQueryAsync(new OrdersBillingQuery(from, to));
             return Ok(response);
         }
+
+        [HttpGet("incomes")]
+        public async Task<IActionResult> Incomes([FromQuery] DateTime from, DateTime to)
+        {
+            var response = await allegroModule.ExecuteQueryAsync(new IncomesQuery(from, to));
+            return Ok(response);
+        }
     }
 }

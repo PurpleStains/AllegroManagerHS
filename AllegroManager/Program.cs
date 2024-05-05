@@ -99,7 +99,7 @@ void ConfigureHttpClients(IServiceCollection services)
 
     services.AddHttpClient<AllegroApiService>((serviceProvider, httpClient) =>
     {
-        httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.allegro.public.v1+json");
+        //httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.allegro.public.v1+json");
         httpClient.BaseAddress = new Uri("https://api.allegro.pl/");
     })
     .ConfigurePrimaryHttpMessageHandler(() =>
