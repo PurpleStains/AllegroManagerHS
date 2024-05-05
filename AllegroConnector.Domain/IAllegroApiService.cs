@@ -1,6 +1,5 @@
 ﻿using AllegroConnector.Domain.Models;
 using AllegroConnector.Domain.Models.Billings;
-using AllegroConnector.Domain.Offer;
 using AllegroConnector.Domain.Requests;
 using AllegroConnector.Domain.Responses;
 

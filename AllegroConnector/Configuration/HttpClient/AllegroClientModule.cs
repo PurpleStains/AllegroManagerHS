@@ -34,10 +34,10 @@ namespace AllegroConnector.Infrastructure.Configuration.HttpClient
 
             builder.Register(ctx =>
             {
-                var tokenRepository = ctx.Resolve<IAllegroOAuthTokenHandler>();
+                var tokenHandler = ctx.Resolve<IAllegroOAuthTokenHandler>();
                 var httpClientFactory = ctx.Resolve<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient(nameof(AllegroApiService));
-                return new AllegroApiService(httpClient, tokenRepository);
+                return new AllegroApiService(httpClient, tokenHandler);
             }).As<IAllegroApiService>();
         }
     }

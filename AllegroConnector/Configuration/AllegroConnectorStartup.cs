@@ -41,7 +41,7 @@ namespace AllegroConnector.Infrastructure.Configuration
             ILogger logger)
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new LoggingModule(logger.ForContext("Module", "AllegroConnector")));
+            containerBuilder.RegisterModule(new LoggingModule(logger));
 
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             //containerBuilder.RegisterModule(new ProcessingModule());

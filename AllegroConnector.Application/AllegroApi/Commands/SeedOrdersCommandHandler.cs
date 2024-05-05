@@ -4,13 +4,16 @@ using AllegroConnector.Domain.Models;
 using AllegroConnector.Domain.Models.Billings;
 using AllegroConnector.Domain.Offer;
 using AllegroConnector.Domain.Orders;
+using FluentResults;
+using Serilog;
 using System.Globalization;
 
 namespace AllegroConnector.Application.AllegroApi.Commands
 {
     internal class SeedOrdersCommandHandler(IAllegroApiService allegroClient,
             IAllegroOrdersRepository ordersRepository,
-            IAllegroOffersRepository offersRepository) : ICommandHandler<SeedOrdersCommand, CheckoutFormResponse>
+            IAllegroOffersRepository offersRepository,
+            ILogger logger) : ICommandHandler<SeedOrdersCommand, CheckoutFormResponse>
     {
 
         public async Task<CheckoutFormResponse> Handle(SeedOrdersCommand query, CancellationToken cancellationToken)
@@ -20,6 +23,11 @@ namespace AllegroConnector.Application.AllegroApi.Commands
             {
                 var billing = await allegroClient.GetBillingForOrder(allegroOrder.Id);
                 var orderItems = await CreateOrderLineItems(allegroOrder.LineItems);
+                var fee = await SumFee(billing.billingEntries);
+
+                if (fee.IsFailed)
+                    continue;
+
                 var order = Domain.Orders.Order.Create(allegroOrder.Id,
                     allegroOrder.Buyer.Email,
                     allegroOrder.Buyer.FirstName,
@@ -27,7 +35,7 @@ namespace AllegroConnector.Application.AllegroApi.Commands
                     allegroOrder.Buyer.Login,
                     allegroOrder.Summary.TotalToPay.Amount,
                     allegroOrder.Status,
-                    SumFee(billing.billingEntries),
+                    fee.Value,
                     allegroOrder.UpdatedAt);
                 order.AddOrderLineItems(orderItems);
 
@@ -39,11 +47,6 @@ namespace AllegroConnector.Application.AllegroApi.Commands
 
             await ordersRepository.Commit();
             return result;
-
-            string SumFee(List<BillingEntry> entries)
-            {
-                return entries.Sum(x => double.Parse(x.value.amount, CultureInfo.InvariantCulture)).ToString();
-            }
         }
 
         async Task<List<Domain.Orders.OrderLineItem>> CreateOrderLineItems(ICollection<Domain.Models.OrderLineItem> items)
@@ -61,6 +64,19 @@ namespace AllegroConnector.Application.AllegroApi.Commands
             }
 
             return result;
+        }
+
+        async Task<Result<string>> SumFee(List<BillingEntry> entries)
+        {
+            try
+            {
+                return Result.Ok(entries.Sum(x => double.Parse(x.value.amount, CultureInfo.InvariantCulture)).ToString());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Couldn't parse fee");
+                return Result.Fail(ex.Message);
+            }
         }
     }
 }
