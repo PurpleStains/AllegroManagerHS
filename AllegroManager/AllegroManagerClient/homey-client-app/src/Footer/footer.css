@@ -1,0 +1,9 @@
+.footer-container {
+  font-size: 0.8rem;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: hsl(0, 0%, 85%);
+  color: white;
+  display: flex;
+  width: 100%;
+  text-align: center;
+}

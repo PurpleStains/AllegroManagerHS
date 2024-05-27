@@ -1,0 +1,6 @@
+.body-container {
+  text-align: center;
+  background-color: hsl(0, 0, 20%);
+  color: white;
+  flex: 1 0 auto;
+}

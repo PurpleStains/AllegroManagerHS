@@ -1,0 +1,11 @@
+.navbar {
+  display: 1 0 flex;
+  flex-direction: row;
+  text-align: left;
+  padding: 10px;
+}
+
+a {
+  margin: 10px;
+  color: white;
+}
