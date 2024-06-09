@@ -1,6 +1,8 @@
-﻿namespace AllegroConnector.Domain.Orders
+﻿using AllegroConnector.BuildingBlocks.Domain;
+
+namespace AllegroConnector.Domain.Orders
 {
-    public class Order
+    public class Order : Entity, IAggregateRoot
     {
         public Guid Id { get; private set; }
         public string? Email { get; private set; }

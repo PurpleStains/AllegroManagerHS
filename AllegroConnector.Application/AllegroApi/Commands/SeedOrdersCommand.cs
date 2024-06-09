@@ -5,9 +5,9 @@ namespace AllegroConnector.Application.AllegroApi.Commands
 {
     public class SeedOrdersCommand : CommandBase<CheckoutFormResponse>
     {
-        public string Limit { get; set; }
+        public string Limit { get; }
 
-        public string Offset { get; set; }
+        public string Offset { get; }
 
         public SeedOrdersCommand(string limit, string offset)
         {

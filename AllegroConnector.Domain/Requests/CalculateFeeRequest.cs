@@ -1,12 +1,12 @@
 ﻿using AllegroConnector.Domain.Models;
+using AllegroConnector.Domain.Responses;
 
 namespace AllegroConnector.Domain.Requests
 {
     public class CalculateFeeRequest
     {
-        public Offer offer { get; set; }
-        public ClassifiedsPackages classifiedsPackages { get; set; }
-        public string marketplaceId = "allegro-pl";
+        public ConcreteProductOfferResponse offer { get; set; }
+        public string marketplaceId { get; set; } = "allegro-pl";
     }
 
     public class Offer
@@ -14,7 +14,7 @@ namespace AllegroConnector.Domain.Requests
         public string id { get; set; }
         public string fundraisingCampaign = null;
         public string[] parameters = [];
-        public Category category { get; set; }
+        public Responses.Category category { get; set; }
         public SellingMode sellingMode { get; set; }
         public Publication publication { get; set; } = new();
     }

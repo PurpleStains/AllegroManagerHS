@@ -1,9 +1,9 @@
 ﻿using AllegroConnector.Application.Contracts;
-using AllegroConnector.Domain.Models;
+using AllegroConnector.Domain.Responses;
 
 namespace AllegroConnector.Application.AllegroApi.Queries
 {
-    public class OrdersQuery : QueryBase<CheckoutFormResponse>
+    public class OrdersQuery : QueryBase<OrdersResponse>
     {
     }
 }

@@ -5,7 +5,6 @@ using AllegroConnector.Domain.Offer;
 using AllegroConnector.Domain.Requests;
 using AllegroConnector.Domain.Responses;
 using System.Globalization;
-using Offer = AllegroConnector.Domain.Requests.Offer;
 
 namespace AllegroConnector.Application.AllegroApi.Queries
 {
@@ -18,28 +17,13 @@ namespace AllegroConnector.Application.AllegroApi.Queries
         {
             var csvReader = new CsvGenericWriter();
             var product = csvReader.Products().Find(x => x.auction_id.Equals(query.OfferId));
-            var offer = offersRepository.GetByIdAsync(product.auction_id).Result;
+            var fromAllegro = await apiClient.GetOffers(product.auction_id);
+            var offer = await offersRepository.GetByIdAsync(product.auction_id);
             var request = new CalculateFeeRequest()
             {
-                offer = new Offer()
-                {
-                    id = offer.OfferId,
-                    category = new()
-                    {
-                        id = offer.CategoryId,
-                    },
-                    sellingMode = new() 
-                    { 
-                        format ="BUY_NOW",
-                        price = new()
-                        {
-                            amount = offer.PriceGross,
-                            currency = "PLN"
-                        }
-                    }
-                },
-                classifiedsPackages = null
+                offer = fromAllegro
             };
+           
             var response = await apiClient.CalculateOfferFee(request);
 
             var calculationBasis = new FeeCalculationBasis()
@@ -56,6 +40,7 @@ namespace AllegroConnector.Application.AllegroApi.Queries
                 ProductEAN = product.products_ean,
                 AuctionId = product.auction_id,
                 OfferName = offer.Name,
+                ProductImage = fromAllegro.images.FirstOrDefault(),
                 FeeDetails = calculated
             };
             return new OffersFeeResponse() { Calculations = new List<OfferCalculations>{ afterFee } };
