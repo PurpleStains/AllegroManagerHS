@@ -21,7 +21,7 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build ./AllegroManager/AllegroManager.sln --configuration Release --no-restore
+        run: dotnet build AllegroManager/AllegroManager.sln --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test ./AllegroManager/AllegroManager.sln --configuration Release --no-restore --collect:"XPlat Code Coverage"
+        run: dotnet test AllegroManager/AllegroManager.sln --configuration Release --no-restore --collect:"XPlat Code Coverage"
