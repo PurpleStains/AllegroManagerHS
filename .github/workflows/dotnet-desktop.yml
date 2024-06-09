@@ -18,10 +18,10 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Install dependencies
-        run: dotnet AllegroManager/AllegroManager.sln  restore
+        run: dotnet AllegroManager/AllegroManager/AllegroManager.sln  restore
 
       - name: Build
-        run: dotnet build AllegroManager/AllegroManager.sln --configuration Release --no-restore
+        run: dotnet build AllegroManager/AllegroManager/AllegroManager.sln --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test AllegroManager/AllegroManager.sln --configuration Release --no-restore --collect:"XPlat Code Coverage"
+        run: dotnet test AllegroManager/AllegroManager/AllegroManager.sln --configuration Release --no-restore --collect:"XPlat Code Coverage"
