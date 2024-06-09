@@ -35,6 +35,9 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
+
+      - name: Install dependencies
+        run: dotnet restore AllegroManager/AllegroManager.sln
           
       - name: Test
         run: dotnet test AllegroManager/AllegroManager.sln --configuration Release --no-restore --collect:"XPlat Code Coverage"
