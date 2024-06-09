@@ -1,5 +1,7 @@
 ﻿using AllegroConnector.Application.AllegroAuthorization;
 using AllegroConnector.Application.AllegroAuthorization.Commands;
+using AllegroConnector.Domain.OAuthToken;
+using AutoMapper;
 using FluentAssertions;
 using FluentResults;
 using Moq;
@@ -10,10 +12,14 @@ namespace AllegroManager.AllegroConnector.Application
     public class AuthorizationTest
     {
         readonly Mock<IAllegroOAuthService> _allegroOAuthService;
+        readonly Mock<IOAuthTokenRepository> _tokenRepository;
+        readonly Mock<IMapper> _mapper;
 
         public AuthorizationTest()
         {
             _allegroOAuthService = new();
+            _tokenRepository = new();
+            _mapper = new();
         }
 
         [Test]
@@ -31,19 +37,22 @@ namespace AllegroManager.AllegroConnector.Application
             result.Errors.Should().HaveCount(0);
         }
 
-        //[Test]
-        //public async Task Handle_Should_Return_SuccessfullyAuthorizedResponseMessage_When_Correct_Parameters()
-        //{
-        //    _allegroOAuthService.Setup(x => x.GetAccessToken(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-        //                           .Returns((int param1, string param2, CancellationToken param3) =>
-        //                               Task.FromResult(Result.Ok(new AuthResponse())));
-        //    var command = new AuthorizeCommand();
-        //    var commandHandler = new AuthorizeCommandHandler(_allegroOAuthService.Object);
+        [Test]
+        public async Task Handle_Should_Return_SuccessfullyAuthorizedResponseMessage_When_Correct_Parameters()
+        {
+            _allegroOAuthService.Setup(x => x.GetAccessToken(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                                   .Returns((int param1, string param2, CancellationToken param3) =>
+                                       Task.FromResult(Result.Ok(new AuthResponse())));
+            _tokenRepository.Setup(x => x.AddAsync(It.IsAny<AllegroOAuthToken>())).Returns(Task.CompletedTask);
+            _mapper.Setup(x => x.Map<AllegroOAuthToken>(It.IsAny<object>())).Returns(new AllegroOAuthToken());
 
-        //    var result = await commandHandler.Handle(command, CancellationToken.None);
+            var command = new AuthorizeCommand(It.IsAny<int>(), It.IsAny<string>());
+            var commandHandler = new AuthorizeCommandHandler(_tokenRepository.Object, _allegroOAuthService.Object, _mapper.Object);
 
-        //    result.IsSuccess.Should().BeTrue();
-        //    result.Errors.Should().HaveCount(0);
-        //}
+            var result = await commandHandler.Handle(command, CancellationToken.None);
+
+            result.IsSuccess.Should().BeTrue();
+            result.Errors.Should().HaveCount(0);
+        }
     }
 }
