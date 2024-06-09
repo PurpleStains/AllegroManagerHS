@@ -18,7 +18,7 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Install dependencies
-        run: dotnet AllegroManager/AllegroManager/AllegroManager.sln  restore
+        run: dotnet restore AllegroManager/AllegroManager/AllegroManager.sln
 
       - name: Build
         run: dotnet build AllegroManager/AllegroManager/AllegroManager.sln --configuration Release --no-restore
