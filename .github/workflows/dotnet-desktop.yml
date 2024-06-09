@@ -1,0 +1,43 @@
+run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Install dependencies
+        run: dotnet restore AllegroManager/AllegroManager.sln
+
+      - name: Build
+        run: dotnet build AllegroManager/AllegroManager.sln --configuration Release --no-restore
+        
+  tests:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install dependencies
+        run: dotnet restore AllegroManager/AllegroManager.sln
+          
+      - name: Test
+        run: dotnet test AllegroManager/AllegroManager.sln --configuration Release --no-restore --collect:"XPlat Code Coverage"
