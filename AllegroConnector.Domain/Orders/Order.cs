@@ -16,10 +16,8 @@ namespace AllegroConnector.Domain.Orders
         public DateTimeOffset UpdatedAt { get; private set; }
         public virtual ICollection<OrderLineItem> LineItems { get; private set; }
 
-        private Order(Guid id, ICollection<OrderLineItem> lineItems)
+        private Order()
         {
-            Id = id;
-            LineItems = lineItems;
         }
 
         private Order(Guid id,
