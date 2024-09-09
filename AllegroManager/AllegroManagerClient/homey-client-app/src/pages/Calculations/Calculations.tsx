@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import OfferDetails from "./Offers/OfferDetails";
+import OfferDetails from "../Offers/OfferDetails";
 
 export default function Calculations() {
 

@@ -1,0 +1,17 @@
+.orders-container {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+}
+
+th {
+  background-color: hsl(0, 0%, 70%);
+  border: none;
+  border-radius: 5px;
+}
+
+tr {
+  background-color: hsl(0, 0%, 92%);
+  border: none;
+  border-radius: 20px;
+}

@@ -1,0 +1,15 @@
+span {
+  color: black;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+.authenticated {
+  background-color: red;
+  margin: auto;
+  height: 4rem;
+  width: 4rem;
+}

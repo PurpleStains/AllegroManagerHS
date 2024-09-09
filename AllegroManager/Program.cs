@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json.Serialization;
 
 Serilog.ILogger _logger = ConfigureLogger();
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +27,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AllegroContext>(options => options.UseSqlServer(connectionString));
@@ -99,7 +101,6 @@ void ConfigureHttpClients(IServiceCollection services)
 
     services.AddHttpClient<AllegroApiService>((serviceProvider, httpClient) =>
     {
-        //httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.allegro.public.v1+json");
         httpClient.BaseAddress = new Uri("https://api.allegro.pl/");
     })
     .ConfigurePrimaryHttpMessageHandler(() =>

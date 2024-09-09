@@ -10,8 +10,8 @@ namespace AllegroConnector.Application.AllegroAuthorization.Commands
     {
         public async Task<Result<SuccessfullyAuthorizedResponseMessage>> Handle(AuthorizeCommand request, CancellationToken cancellationToken)
         {
-            await Task.Delay(request.Interval * 1000, cancellationToken);
-            var response = await apiClient.GetAccessToken(request.Interval, request.DeviceCode, cancellationToken);
+            await Task.Delay(request.interval * 1000, cancellationToken);
+            var response = await apiClient.GetAccessToken(request.interval, request.deviceCode, cancellationToken);
             if(response.IsSuccess)
             {
                 var token = mapper.Map<AllegroOAuthToken>(response.Value);

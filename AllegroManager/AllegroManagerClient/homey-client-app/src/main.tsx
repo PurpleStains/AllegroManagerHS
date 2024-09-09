@@ -2,9 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Calculations from './pages/Calculations.tsx'
+import Calculations from './pages/Calculations/Calculations.tsx'
 import NotFoundPage from './pages/NotFoundPage.tsx'
 import HomePage from './pages/HomePage.tsx'
+import Orders from './pages/Orders/Orders.tsx'
+import AllegroAuth from './pages/AllegroAuthentication/AllegroAuth.tsx'
+import 'bootstrap/dist/css/bootstrap.css';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +18,14 @@ const router = createBrowserRouter([
       {
         path: 'calculations',
         element: <Calculations />
+      },
+      {
+        path: 'orders',
+        element: <Orders />
+      },
+      {
+        path: 'authentication',
+        element: <AllegroAuth />
       }
     ]
   },

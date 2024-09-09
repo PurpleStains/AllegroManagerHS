@@ -1,12 +1,17 @@
 ﻿using AllegroConnector.Application.AllegroAuthorization.Commands;
 using AllegroConnector.Application.Contracts;
+using AllegroConnector.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AllegroManager.Modules.Allegro
 {
+    [ApiController]
+    [AllowAnonymous]
+    [Route("api/myallegro/[controller]")]
     public class AllegroAuthorizationController(IAllegroModule allegroModule) : ControllerBase
     {
-        [HttpPost("GetCode")]
+        [HttpGet("GetCode")]
         public async Task<IActionResult> GetCode()
         {
             var result = await allegroModule.ExecuteCommandAsync(new GetCodeCommand());
@@ -29,6 +34,14 @@ namespace AllegroManager.Modules.Allegro
 
             var error = result.Errors.First() as AuthorizationError;
             return Ok(error);
+        }
+
+        [HttpGet("is-authorized")]
+        public async Task<IActionResult> IsAuthorized()
+        {
+            var result = await allegroModule.ExecuteCommandAsync(new IsAuthorizedCommand());
+
+            return Ok(result.Value);
         }
     }
 }

@@ -6,6 +6,8 @@ export default function Navbar() {
         <div className="navbar">
             <NavLink to="">Home</NavLink>
             <NavLink to="calculations">Calculations</NavLink>
+            <NavLink to="orders">Orders</NavLink>
+            <NavLink to="authentication">Allegro Authencitaction</NavLink>
         </div>
     );
 }

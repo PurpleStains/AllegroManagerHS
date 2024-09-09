@@ -5,12 +5,12 @@ namespace AllegroConnector.Application.AllegroAuthorization.Commands
 {
     public class AuthorizeCommand : CommandBase<Result<SuccessfullyAuthorizedResponseMessage>>
     {
-        public int Interval { get; }
-        public string DeviceCode { get; }
+        public int interval { get; }
+        public string deviceCode { get; }
         public AuthorizeCommand(int interval, string deviceCode)
         {
-            Interval = interval;
-            DeviceCode = deviceCode;
+            this.interval = interval;
+            this.deviceCode = deviceCode;
         }
     }
 }

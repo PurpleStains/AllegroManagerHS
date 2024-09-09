@@ -43,26 +43,6 @@ namespace AllegroManager.Modules.Allegro
             return Ok(response);
         }
 
-        [HttpGet("seedOrders")]
-        public async Task<IActionResult> SeedOrders([FromQuery] string limit, string offset)
-        {
-            var response = await allegroModule.ExecuteCommandAsync(new SeedOrdersCommand(limit, offset));
-            return Ok(response);
-        }
-
-        [HttpGet("orders")]
-        public async Task<IActionResult> Orders([FromQuery] string limit, string offset)
-        {
-            var response = await allegroModule.ExecuteQueryAsync(new OrdersQuery());
-            return Ok(response);
-        }
-
-        [HttpGet("orderBillings")]
-        public async Task<IActionResult> OrderBillings([FromQuery] DateTime from, DateTime to)
-        {
-            var response = await allegroModule.ExecuteQueryAsync(new OrdersBillingQuery(from, to));
-            return Ok(response);
-        }
 
         [HttpGet("incomes")]
         public async Task<IActionResult> Incomes([FromQuery] DateTime from, DateTime to)
