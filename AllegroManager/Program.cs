@@ -118,12 +118,4 @@ void ConfigureHttpClients(IServiceCollection services)
         };
     })
     .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
-
-    services.AddHttpClient<BaselinkerClient>((serviceProvider, httpClient) =>
-    {
-        httpClient.BaseAddress = new Uri("https://api.baselinker.com/connector.php");
-        httpClient.DefaultRequestHeaders.Add("X-BLToken",
-            "4015149-4035230-Z8BEOJ9XKWZP5ALPNAWMH3Y628EEXSVOGBUJUX1MN6F4H6HWXVM6CP86VG5B4UTZ");
-    })
-    .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
 }
