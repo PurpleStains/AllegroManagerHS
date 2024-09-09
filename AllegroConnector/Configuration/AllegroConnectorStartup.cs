@@ -49,7 +49,6 @@ namespace AllegroConnector.Infrastructure.Configuration
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new AllegroClientModule(clientId));
             //containerBuilder.RegisterModule(new AuthenticationModule());
-
             containerBuilder.RegisterInstance(executionContextAccessor);
             RegisterMapper(containerBuilder);
 

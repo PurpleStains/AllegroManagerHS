@@ -4,8 +4,11 @@ using AllegroConnector.Application.AllegroOAuth;
 using AllegroConnector.Infrastructure;
 using AllegroConnector.Infrastructure.Configuration;
 using AllegroManager.Modules.Allegro;
+using AllegroManager.Modules.Baselinker;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using BaselinkerConnector.Application.BaselinkerApi;
+using BaselinkerConnector.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Net.Http.Headers;
@@ -24,6 +27,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new AllegroManagerAutoFacModule()));
+
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+    builder.RegisterModule(new BaselinkerAutoFacModule()));
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -80,6 +86,7 @@ void InitializeModules(ILifetimeScope services)
 {
     var httpClientFactory = services.Resolve<IHttpClientFactory>();
     AllegroConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger);
+    BaselinkerConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger);
 }
 
 void ConfigureHttpClients(IServiceCollection services)
@@ -109,6 +116,14 @@ void ConfigureHttpClients(IServiceCollection services)
         {
             PooledConnectionLifetime = TimeSpan.FromMinutes(5),
         };
+    })
+    .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
+
+    services.AddHttpClient<BaselinkerClient>((serviceProvider, httpClient) =>
+    {
+        httpClient.BaseAddress = new Uri("https://api.baselinker.com/connector.php");
+        httpClient.DefaultRequestHeaders.Add("X-BLToken",
+            "4015149-4035230-Z8BEOJ9XKWZP5ALPNAWMH3Y628EEXSVOGBUJUX1MN6F4H6HWXVM6CP86VG5B4UTZ");
     })
     .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
 }

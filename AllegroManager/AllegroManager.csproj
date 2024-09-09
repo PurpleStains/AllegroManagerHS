@@ -36,6 +36,8 @@
   <ItemGroup>
     <ProjectReference Include="..\AllegroConnector.Application\AllegroConnector.Application.csproj" />
     <ProjectReference Include="..\AllegroConnector\AllegroConnector.Infrastructure.csproj" />
+    <ProjectReference Include="..\BaselinkerConnector.Application\BaselinkerConnector.Application.csproj" />
+    <ProjectReference Include="..\BaselinkerConnector.Infrastructure\BaselinkerConnector.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

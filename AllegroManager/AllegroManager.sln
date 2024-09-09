@@ -31,11 +31,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroManager.AllegroConne
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A99DF2C3-1762-4CD6-8E23-0C8E4FBD3A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllegroManager.Modules.Allegro.AllegroConnector.ArchTests", "..\AllegroManager.Modules.Allegro.AllegroConnector.ArchTests\AllegroManager.Modules.Allegro.AllegroConnector.ArchTests.csproj", "{943CECB6-5F92-411F-AA6D-16DD01057C3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroManager.Modules.Allegro.AllegroConnector.ArchTests", "..\AllegroManager.Modules.Allegro.AllegroConnector.ArchTests\AllegroManager.Modules.Allegro.AllegroConnector.ArchTests.csproj", "{943CECB6-5F92-411F-AA6D-16DD01057C3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B2E107B3-DCED-445E-9180-161E7B830C20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllegroManager.BuildingBlocks.AllegroConnector.IntegrationTests", "..\AllegroManager.BuildingBlocks.AllegroConnector.IntegrationTests\AllegroManager.BuildingBlocks.AllegroConnector.IntegrationTests.csproj", "{38AAEE44-33C2-4FEA-9964-AD735815BC5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllegroManager.BuildingBlocks.AllegroConnector.IntegrationTests", "..\AllegroManager.BuildingBlocks.AllegroConnector.IntegrationTests\AllegroManager.BuildingBlocks.AllegroConnector.IntegrationTests.csproj", "{38AAEE44-33C2-4FEA-9964-AD735815BC5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Baselinker", "Baselinker", "{316E384A-6572-40A5-B196-F13B1463F616}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaselinkerConnector.Infrastructure", "..\BaselinkerConnector.Infrastructure\BaselinkerConnector.Infrastructure.csproj", "{0C98DC94-BA50-41BD-9BD8-01D0CF656C1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaselinkerConnector.Domain", "..\BaselinkerConnector.Domain\BaselinkerConnector.Domain.csproj", "{D958D4B2-4EF7-4C4D-A86D-D583D977744D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaselinkerConnector.Application", "..\BaselinkerConnector.Application\BaselinkerConnector.Application.csproj", "{8340E415-A9AC-47A3-9FAE-1D9C5229201C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +95,18 @@ Global
 		{38AAEE44-33C2-4FEA-9964-AD735815BC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38AAEE44-33C2-4FEA-9964-AD735815BC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38AAEE44-33C2-4FEA-9964-AD735815BC5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C98DC94-BA50-41BD-9BD8-01D0CF656C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C98DC94-BA50-41BD-9BD8-01D0CF656C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C98DC94-BA50-41BD-9BD8-01D0CF656C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C98DC94-BA50-41BD-9BD8-01D0CF656C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D958D4B2-4EF7-4C4D-A86D-D583D977744D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D958D4B2-4EF7-4C4D-A86D-D583D977744D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D958D4B2-4EF7-4C4D-A86D-D583D977744D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D958D4B2-4EF7-4C4D-A86D-D583D977744D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8340E415-A9AC-47A3-9FAE-1D9C5229201C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8340E415-A9AC-47A3-9FAE-1D9C5229201C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8340E415-A9AC-47A3-9FAE-1D9C5229201C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8340E415-A9AC-47A3-9FAE-1D9C5229201C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +125,10 @@ Global
 		{943CECB6-5F92-411F-AA6D-16DD01057C3D} = {A99DF2C3-1762-4CD6-8E23-0C8E4FBD3A7E}
 		{B2E107B3-DCED-445E-9180-161E7B830C20} = {50A17FFE-3C58-4656-A080-1FFB816FBAC2}
 		{38AAEE44-33C2-4FEA-9964-AD735815BC5B} = {B2E107B3-DCED-445E-9180-161E7B830C20}
+		{316E384A-6572-40A5-B196-F13B1463F616} = {49A09560-A0EC-4562-8A37-03867C74F449}
+		{0C98DC94-BA50-41BD-9BD8-01D0CF656C1D} = {316E384A-6572-40A5-B196-F13B1463F616}
+		{D958D4B2-4EF7-4C4D-A86D-D583D977744D} = {316E384A-6572-40A5-B196-F13B1463F616}
+		{8340E415-A9AC-47A3-9FAE-1D9C5229201C} = {316E384A-6572-40A5-B196-F13B1463F616}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {371FB8C8-CEFC-436D-AB1F-D22153709692}
