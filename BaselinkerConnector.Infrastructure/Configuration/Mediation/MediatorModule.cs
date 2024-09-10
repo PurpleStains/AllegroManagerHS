@@ -4,6 +4,7 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Features.Variance;
 using BaselinkerConnector.Application.Contracts;
+using BaselinkerConnector.Infrastructure.Configuration.Pipelines;
 using MediatR;
 using MediatR.Pipeline;
 using System.Reflection;
@@ -51,6 +52,7 @@ namespace BaselinkerConnector.Infrastructure.Configuration.Mediation
 
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(BaselinkerClientPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>));
         }
 
         private class ScopedContravariantRegistrationSource : IRegistrationSource

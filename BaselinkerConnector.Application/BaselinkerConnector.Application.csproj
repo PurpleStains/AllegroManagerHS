@@ -14,4 +14,8 @@
     <ProjectReference Include="..\BaselinkerConnector.Domain\BaselinkerConnector.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BaselinkerApi\NewFolder\" />
+  </ItemGroup>
+
 </Project>

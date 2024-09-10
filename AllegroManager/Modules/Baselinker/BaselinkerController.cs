@@ -1,4 +1,4 @@
-﻿using BaselinkerConnector.Application.BaselinkerApi.Commands;
+﻿using BaselinkerConnector.Application.BaselinkerApi.Requests;
 using BaselinkerConnector.Application.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +9,7 @@ namespace AllegroManager.Modules.Baselinker
         [HttpGet("Products")]
         public async Task<IActionResult> Products()
         {
-            var response = await baselinker.ExecuteCommandAsync(new GetBaselinkerProductsCommand());
+            var response = await baselinker.ExecuteRequestAsync(new GetBaselinkerProductsRequest());
             return Ok(response);
         }
     }

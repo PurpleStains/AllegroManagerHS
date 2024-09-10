@@ -2,6 +2,6 @@
 {
     public interface IBaselinkerClient
     {
-        public Task<string> Products();
+        public HttpClient Client();
     }
 }

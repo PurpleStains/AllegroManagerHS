@@ -28,5 +28,15 @@ namespace BaselinkerConnector.Infrastructure
                 return await mediator.Send(query);
             }
         }
+
+        public async Task<TResult> ExecuteRequestAsync<TResult>(IRequest<TResult> request)
+        {
+            return await RequestsExecutor.Execute(request);
+        }
+
+        public async Task ExecuteRequestAsync(IRequest request)
+        {
+            await RequestsExecutor.Execute(request);
+        }
     }
 }

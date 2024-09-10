@@ -1,5 +1,4 @@
 using AllegroConnector.Application.AllegroApi;
-using AllegroConnector.Application.AllegroAuthorization;
 using AllegroConnector.Application.AllegroOAuth;
 using AllegroConnector.Infrastructure;
 using AllegroConnector.Infrastructure.Configuration;
@@ -7,7 +6,6 @@ using AllegroManager.Modules.Allegro;
 using AllegroManager.Modules.Baselinker;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using BaselinkerConnector.Application.BaselinkerApi;
 using BaselinkerConnector.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -21,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var clientId = builder.Configuration["AllegroApi:ClientId"];
 var clientSecret = builder.Configuration["AllegroApi:ClientSecret"];
+var baselinkerConfig = builder.Configuration.GetSection("Baselinker");
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -86,7 +85,7 @@ void InitializeModules(ILifetimeScope services)
 {
     var httpClientFactory = services.Resolve<IHttpClientFactory>();
     AllegroConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger);
-    BaselinkerConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger);
+    BaselinkerConnectorStartup.Initialize(connectionString, clientId, baselinkerConfig, httpClientFactory, _logger);
 }
 
 void ConfigureHttpClients(IServiceCollection services)
