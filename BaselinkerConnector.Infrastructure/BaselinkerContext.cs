@@ -1,5 +1,5 @@
 ﻿using BaselinkerConnector.Domain.Products;
-using BaselinkerConnector.Infrastructure.Domain;
+using BaselinkerConnector.Infrastructure.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaselinkerConnector.Infrastructure
