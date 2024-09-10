@@ -4,22 +4,23 @@ using MediatR;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
-    public class GetBaselinkerProductsRequestHandler : 
-        IRequestHandler<GetBaselinkerProductsRequest, Result<string>>
+    public class GetProductDetailsRequestHandler : 
+        IRequestHandler<GetProductDetailsRequest, Result<string>>
     {
         private readonly IBaselinkerClient _client;
+        private const string Method = "getInventoryProductsData";
 
-        public GetBaselinkerProductsRequestHandler(IBaselinkerClient client)
+        public GetProductDetailsRequestHandler(IBaselinkerClient client)
         {
             _client = client;
         }
 
-        public async Task<Result<string>> Handle(GetBaselinkerProductsRequest request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(GetProductDetailsRequest request, CancellationToken cancellationToken)
         {
             var message = new HttpRequestMessage(HttpMethod.Post, "");
             message.Content = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("method", "getInventoryProductsData"),
+                new KeyValuePair<string, string>("method", Method),
                 new KeyValuePair<string, string>("parameters", "{\"inventory_id\" : 54549, \"products\": [\"188176848\"]}")
             });
 

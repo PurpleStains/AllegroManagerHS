@@ -6,6 +6,7 @@ using AllegroManager.Modules.Allegro;
 using AllegroManager.Modules.Baselinker;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using BaselinkerConnector.Infrastructure;
 using BaselinkerConnector.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -37,6 +38,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AllegroContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<BaselinkerContext>(options => options.UseSqlServer(connectionString));
 ConfigureHttpClients(builder.Services);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

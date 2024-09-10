@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BaselinkerConnector.Domain.Products;
+using BaselinkerConnector.Infrastructure.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace BaselinkerConnector.Infrastructure
 {
-    internal class BaselinkerContext : DbContext
+    public class BaselinkerContext : DbContext
     {
+        public DbSet<Product> Products { get; set; }
         public BaselinkerContext(DbContextOptions options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -13,6 +16,7 @@ namespace BaselinkerConnector.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new BaselinkerProductEntityTypeConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         }
     }

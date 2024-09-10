@@ -3,5 +3,5 @@ using FluentResults;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
-    public class GetBaselinkerProductsRequest : HttpCallRequestBase<Result<string>> { }
+    public class GetProductDetailsRequest : HttpCallRequestBase<Result<string>> { }
 }
