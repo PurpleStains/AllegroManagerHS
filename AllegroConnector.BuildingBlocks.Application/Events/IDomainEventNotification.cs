@@ -4,11 +4,11 @@ namespace AllegroConnector.BuildingBlocks.Application.Events
 {
     public interface IDomainEventNotification<out TEventType> : IDomainEventNotification
     {
-        TEventType Type { get; }
+        TEventType DomainEvent { get; }
     }
 
     public interface IDomainEventNotification : INotification
     {
-        Guid id { get; }
+        Guid Id { get; }
     }
 }
