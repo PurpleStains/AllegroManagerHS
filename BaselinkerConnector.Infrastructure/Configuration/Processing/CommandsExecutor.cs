@@ -1,5 +1,5 @@
-﻿using AllegroConnector.Application.Contracts;
-using Autofac;
+﻿using Autofac;
+using BaselinkerConnector.Application.Contracts;
 using MediatR;
 
 namespace BaselinkerConnector.Infrastructure.Configuration.Processing

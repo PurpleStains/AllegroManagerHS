@@ -1,4 +1,4 @@
-﻿using AllegroConnector.Application.Commands;
+﻿using BaselinkerConnector.Application.Configuration.Commands;
 using BaselinkerConnector.Domain.Products;
 using Serilog;
 

@@ -1,5 +1,4 @@
-﻿using AllegroConnector.Application.Contracts;
-using MediatR;
+﻿using MediatR;
 
 namespace BaselinkerConnector.Application.Contracts
 {

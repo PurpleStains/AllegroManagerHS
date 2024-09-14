@@ -1,4 +1,5 @@
-﻿using AllegroConnector.Application.Contracts;
+﻿
+using BaselinkerConnector.Application.Contracts;
 
 namespace BaselinkerConnector.Application.Products.Commands
 {

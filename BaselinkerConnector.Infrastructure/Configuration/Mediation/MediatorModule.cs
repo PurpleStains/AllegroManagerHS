@@ -1,8 +1,8 @@
-﻿using AllegroConnector.Application.Commands;
-using AllegroConnector.BuildingBlocks.Infrastructure;
+﻿using AllegroConnector.BuildingBlocks.Infrastructure;
 using Autofac;
 using Autofac.Core;
 using Autofac.Features.Variance;
+using BaselinkerConnector.Application.Configuration.Commands;
 using BaselinkerConnector.Application.Contracts;
 using BaselinkerConnector.Infrastructure.Configuration.Pipelines;
 using MediatR;

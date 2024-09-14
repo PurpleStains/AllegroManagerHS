@@ -4,6 +4,7 @@ using BaselinkerConnector.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaselinkerConnector.Infrastructure.Migrations
 {
     [DbContext(typeof(BaselinkerContext))]
-    partial class BaselinkerContextModelSnapshot : ModelSnapshot
+    [Migration("20240914105456_InitInternalCommandsForBaseLinker")]
+    partial class InitInternalCommandsForBaseLinker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

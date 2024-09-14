@@ -1,5 +1,4 @@
-﻿using AllegroConnector.Application.Contracts;
-using Autofac;
+﻿using Autofac;
 using BaselinkerConnector.Application.Contracts;
 using BaselinkerConnector.Infrastructure.Configuration;
 using BaselinkerConnector.Infrastructure.Configuration.Processing;

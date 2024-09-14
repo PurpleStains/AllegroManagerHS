@@ -49,8 +49,7 @@ namespace BaselinkerConnector.Application.Products
                 return;
             }
 
-            product.Id = Guid.NewGuid();
-            product.AverageGrossPriceBuy = result.Value.products.Values.First().average_cost;
+            product.SetAverageGrossPriceBuy(result.Value.products.Values.First().average_cost);
             await repository.AddAsync(product);
         }
     }

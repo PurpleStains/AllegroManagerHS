@@ -29,7 +29,7 @@ namespace BaselinkerConnector.Application.BaselinkerApi.Requests
             var result = JsonSerializer.Deserialize<ProductsResponse>(content);
 
             var products = result?.products.Values.Select(x => Product
-                .Create(x.id, x.ean, x.sku, x.name, x.stock.First().Value, x.prices.First().Value))
+                .CreateNew(x.id, x.ean, x.sku, x.name, x.stock.First().Value, x.prices.First().Value))
                 .ToList();
 
             return Result.Ok(products ?? []);

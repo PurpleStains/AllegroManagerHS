@@ -2,9 +2,9 @@
 
 namespace BaselinkerConnector.Domain.Products
 {
-    public class Product: Entity, IAggregateRoot 
+    public class Product : Entity, IAggregateRoot
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
         public int ProductId { get; set; }
         public string Ean { get; set; }
         public string Sku { get; set; }
@@ -13,17 +13,25 @@ namespace BaselinkerConnector.Domain.Products
         public double AveragePrice { get; set; }
         public double AverageGrossPriceBuy { get; set; }
 
-        public static Product Create(int id, string ean, string sku, string name, int stock, double averagePrice)
+        private Product (int productId, string ean, string sku, string name, int stock, double averagePrice)
         {
-            return new Product
-            {
-                ProductId = id,
-                Ean = ean,
-                Sku = sku,
-                Name = name,
-                Stock = stock,
-                AveragePrice = averagePrice
-            };
+            Id = Guid.NewGuid();
+            ProductId = productId;
+            Ean = ean;
+            Sku = sku;
+            Name = name;
+            Stock = stock;
+            AveragePrice = averagePrice;
+        }
+
+        public static Product CreateNew(int productId, string ean, string sku, string name, int stock, double averagePrice)
+        {
+            return new Product(productId, ean, sku, name, stock, averagePrice);
+        }
+
+        public void SetAverageGrossPriceBuy(double price)
+        {
+            AverageGrossPriceBuy = price;
         }
     }
 }
