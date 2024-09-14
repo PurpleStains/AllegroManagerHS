@@ -107,16 +107,16 @@ void ConfigureHttpClients(IServiceCollection services)
     })
     .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
 
-    services.AddHttpClient<AllegroApiService>((serviceProvider, httpClient) =>
-    {
-        httpClient.BaseAddress = new Uri("https://api.allegro.pl/");
-    })
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        return new SocketsHttpHandler
-        {
-            PooledConnectionLifetime = TimeSpan.FromMinutes(5),
-        };
-    })
-    .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
+    //services.AddHttpClient<AllegroApiService>((serviceProvider, httpClient) =>
+    //{
+    //    httpClient.BaseAddress = new Uri("https://api.allegro.pl/");
+    //})
+    //.ConfigurePrimaryHttpMessageHandler(() =>
+    //{
+    //    return new SocketsHttpHandler
+    //    {
+    //        PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+    //    };
+    //})
+    //.SetHandlerLifetime(Timeout.InfiniteTimeSpan);
 }

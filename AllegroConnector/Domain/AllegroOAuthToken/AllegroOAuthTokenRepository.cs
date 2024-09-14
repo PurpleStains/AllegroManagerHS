@@ -2,7 +2,7 @@
 
 namespace AllegroConnector.Infrastructure.Domain.AllegroOAuthToken
 {
-    internal class AllegroOAuthTokenRepository : Token.IOAuthTokenRepository
+    public class AllegroOAuthTokenRepository : Token.IOAuthTokenRepository
     {
         private readonly AllegroContext _context;
 

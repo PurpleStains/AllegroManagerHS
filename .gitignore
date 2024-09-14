@@ -84,6 +84,7 @@ artifacts/
 
 *AllegroCeny*
 *AllegroAukcje*
+*logs
 *.csv
 *_i.c
 *_p.c

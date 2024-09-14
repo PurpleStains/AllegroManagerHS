@@ -1,6 +1,5 @@
 ﻿using AllegroConnector.Application.AllegroAuthorization.Commands;
 using AllegroConnector.Application.Contracts;
-using AllegroConnector.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +25,7 @@ namespace AllegroManager.Modules.Allegro
         [HttpPost("Authorize")]
         public async Task<IActionResult> Authorize([FromBody] AuthorizeCommand command)
         {
+            await Task.Delay(20000);
             var result = await allegroModule.ExecuteCommandAsync(command);
             if (result.IsSuccess)
             {

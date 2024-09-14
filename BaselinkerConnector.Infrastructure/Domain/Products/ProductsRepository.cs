@@ -17,7 +17,7 @@ namespace BaselinkerConnector.Infrastructure.Domain.Products
 
         public async Task<Product?> GetByIdAsync(int id)
         {
-            return await context.Products.FirstOrDefaultAsync(x => x.Id.Equals(id));
+            return await context.Products.FirstOrDefaultAsync(x => x.ProductId.Equals(id));
         }
     }
 }

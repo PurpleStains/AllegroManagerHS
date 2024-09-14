@@ -1,8 +1,10 @@
-﻿using AllegroConnector.Infrastructure.Configuration.DataAccess;
+﻿using AllegroConnector.Domain.OAuthToken;
+using AllegroConnector.Infrastructure.Configuration.DataAccess;
 using AllegroConnector.Infrastructure.Configuration.HttpClient;
 using AllegroConnector.Infrastructure.Configuration.Logging;
 using AllegroConnector.Infrastructure.Configuration.Mapper;
 using AllegroConnector.Infrastructure.Configuration.Mediation;
+using AllegroConnector.Infrastructure.Domain.AllegroOAuthToken;
 using Autofac;
 using AutoMapper;
 using Serilog;

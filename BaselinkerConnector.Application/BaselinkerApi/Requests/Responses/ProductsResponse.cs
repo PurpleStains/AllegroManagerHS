@@ -1,10 +1,8 @@
-﻿using BaselinkerConnector.Domain.Products;
-
-namespace BaselinkerConnector.Application.BaselinkerApi.Requests.Responses
+﻿namespace BaselinkerConnector.Application.BaselinkerApi.Requests.Responses
 {
     public class ProductsResponse
     {
-        public string status { get; set; }
-        public Dictionary<long, ProductResponse> products { get; set; }
+        public string? status { get; set; }
+        public Dictionary<long, ProductResponse>? products { get; set; }
     }
 }

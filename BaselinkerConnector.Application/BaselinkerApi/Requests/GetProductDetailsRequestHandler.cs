@@ -1,35 +1,51 @@
-﻿using BaselinkerConnector.Domain;
+﻿using BaselinkerConnector.Application.BaselinkerApi.Requests.Responses;
+using BaselinkerConnector.Application.Option;
+using BaselinkerConnector.Domain;
 using FluentResults;
 using MediatR;
+using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
-    public class GetProductDetailsRequestHandler : 
-        IRequestHandler<GetProductDetailsRequest, Result<string>>
+    public class GetProductDetailsRequestHandler(IBaselinkerClient client, IOptions<BaselinkerOption> options) : 
+        IRequestHandler<GetProductDetailsRequest, Result<ProductsDetailsResponse>>
     {
-        private readonly IBaselinkerClient _client;
+
         private const string Method = "getInventoryProductsData";
 
-        public GetProductDetailsRequestHandler(IBaselinkerClient client)
+        public async Task<Result<ProductsDetailsResponse>> Handle(GetProductDetailsRequest request, CancellationToken cancellationToken)
         {
-            _client = client;
-        }
+            if (string.IsNullOrEmpty(options.Value.InventoryId))
+            {
+               return Result.Fail("Missing Inventory Id");
+            }
 
-        public async Task<Result<string>> Handle(GetProductDetailsRequest request, CancellationToken cancellationToken)
-        {
             var message = new HttpRequestMessage(HttpMethod.Post, "");
+
+            string jsonString = $"{{\"inventory_id\" : {options.Value.InventoryId}, \"products\": [\"{request.ProductId}\"]}}";
             message.Content = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("method", Method),
-                new KeyValuePair<string, string>("parameters", "{\"inventory_id\" : 54549, \"products\": [\"188176848\"]}")
+                new KeyValuePair<string, string>("parameters", jsonString)
             });
 
-            var client = _client.Client();
-            var response = await client.SendAsync(message, cancellationToken);
+            var response = await client.Client().SendAsync(message, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            var products = await response.Content.ReadAsStringAsync();
-            return Result.Ok(products);
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ProductsDetailsResponse>(content);
+            if (result is null)
+            {
+                return Result.Fail("Result response was empty");
+            }
+
+            if (result?.status?.Equals("ERROR") == true)
+            {
+                return Result.Fail($"Status: {result?.status} ErrorCode: {result?.error_code} Message: {result?.error_message}");
+            }
+
+            return Result.Ok(result);
         }
     }
 }

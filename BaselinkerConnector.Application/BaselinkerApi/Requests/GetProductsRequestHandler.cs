@@ -3,11 +3,12 @@ using BaselinkerConnector.Domain;
 using BaselinkerConnector.Domain.Products;
 using FluentResults;
 using MediatR;
+using Serilog;
 using System.Text.Json;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
-    public class GetProductsRequestHandler(IBaselinkerClient client)
+    public class GetProductsRequestHandler(IBaselinkerClient client, ILogger logger)
         : IRequestHandler<GetProductsRequest, Result<List<Product>>>
     {
         private const string Method = "getInventoryProductsList";

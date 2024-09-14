@@ -12,7 +12,7 @@ namespace BaselinkerConnector.Infrastructure.Domain.Products
 
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Id)
+            builder.Property(p => p.ProductId)
                    .IsRequired();
 
             builder.Property(p => p.Ean)
@@ -32,6 +32,8 @@ namespace BaselinkerConnector.Infrastructure.Domain.Products
             builder.Property(p => p.AveragePrice)
                    .HasPrecision(18, 2);
 
+            builder.Property(p => p.AverageGrossPriceBuy)
+                   .HasPrecision(18, 2);
         }
     }
 }

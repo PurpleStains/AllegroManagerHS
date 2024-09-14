@@ -15,7 +15,6 @@ namespace AllegroConnector.Application.AllegroApi
         public async Task<SaleOffersResponse> SaleOffers(string limit, string offset)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "sale/offers");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
             request.Content = new FormUrlEncodedContent([
                 new("limit", limit),
                 new("offset", offset)
@@ -30,7 +29,6 @@ namespace AllegroConnector.Application.AllegroApi
         public async Task<CategoryResponse> GetCategories()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "sale/categories");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var categories = JsonSerializer.Deserialize<CategoryResponse>(await response.Content.ReadAsStringAsync());
@@ -40,7 +38,6 @@ namespace AllegroConnector.Application.AllegroApi
         public async Task<ConcreteProductOfferResponse> GetOffers(string offerID)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"sale/product-offers/{offerID}");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var offer = JsonSerializer.Deserialize<ConcreteProductOfferResponse>(await response.Content.ReadAsStringAsync());
@@ -50,7 +47,6 @@ namespace AllegroConnector.Application.AllegroApi
         public async Task<CalculatedFeeResponse> CalculateOfferFee(CalculateFeeRequest requestBody)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, $"pricing/offer-fee-preview");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
             request.Content = new StringContent(JsonSerializer.Serialize(requestBody), 
                 Encoding.UTF8, "application/vnd.allegro.public.v1+json");
@@ -63,7 +59,6 @@ namespace AllegroConnector.Application.AllegroApi
         public async Task<CheckoutFormResponse> GetOrders(string limit, string offset)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"order/checkout-forms?limit={limit}&offset={offset}");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
 
             var response = await client.SendAsync(request);
@@ -75,7 +70,6 @@ namespace AllegroConnector.Application.AllegroApi
         public async Task<BillingEntries> GetBillingForOrder(Guid orderId)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "billing/billing-entries");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenHandler.GetAccessToken());
             request.Content = new FormUrlEncodedContent([
                 new("order.id", orderId.ToString())
             ]);

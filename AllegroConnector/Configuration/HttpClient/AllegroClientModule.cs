@@ -6,6 +6,7 @@ using AllegroConnector.Domain.FeeCalculations;
 using AllegroConnector.Domain.OAuthToken;
 using AllegroConnector.Infrastructure.Domain.AllegroOAuthToken;
 using Autofac;
+using System.Net.Http.Headers;
 
 namespace AllegroConnector.Infrastructure.Configuration.HttpClient
 {
@@ -13,9 +14,13 @@ namespace AllegroConnector.Infrastructure.Configuration.HttpClient
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<AllegroOAuthTokenRepository>()
+                .As<IOAuthTokenRepository>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<AllegroOAuthTokenHandler>()
                 .As<IAllegroOAuthTokenHandler>()
-                .SingleInstance();
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<AllegroPackageFee>()
                 .As<IAllegroPackageFee>()
@@ -37,8 +42,13 @@ namespace AllegroConnector.Infrastructure.Configuration.HttpClient
                 var tokenHandler = ctx.Resolve<IAllegroOAuthTokenHandler>();
                 var httpClientFactory = ctx.Resolve<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient(nameof(AllegroApiService));
+                httpClient.BaseAddress = new Uri("https://api.allegro.pl/");
+                httpClient.DefaultRequestHeaders.Authorization
+                            = new AuthenticationHeaderValue("Bearer", tokenHandler.GetToken().Result);
+
                 return new AllegroApiService(httpClient, tokenHandler);
-            }).As<IAllegroApiService>();
+            }).As<IAllegroApiService>()
+            .InstancePerLifetimeScope();
         }
     }
 }
