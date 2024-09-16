@@ -1,6 +1,6 @@
 ﻿using BaselinkerConnector.Application.BaselinkerApi.Requests.Responses;
+using BaselinkerConnector.Application.Configuration.Commands;
 using BaselinkerConnector.Domain;
-using BaselinkerConnector.Domain.Products;
 using FluentResults;
 using MediatR;
 using Serilog;
@@ -9,11 +9,11 @@ using System.Text.Json;
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
     public class GetProductsRequestHandler(IBaselinkerClient client, ILogger logger)
-        : IRequestHandler<GetProductsRequest, Result<List<Product>>>
+        : ICommandHandler<GetProductsRequest, Result<ProductsResponse>>
     {
         private const string Method = "getInventoryProductsList";
 
-        public async Task<Result<List<Product>>> Handle(GetProductsRequest request, CancellationToken cancellationToken)
+        public async Task<Result<ProductsResponse>> Handle(GetProductsRequest request, CancellationToken cancellationToken)
         {
             var message = new HttpRequestMessage(HttpMethod.Post, "");
             message.Content = new FormUrlEncodedContent(new[]
@@ -26,13 +26,14 @@ namespace BaselinkerConnector.Application.BaselinkerApi.Requests
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrEmpty(content))
+            {
+                return Result.Fail($"Response for {Method} was empty");
+            }
+
             var result = JsonSerializer.Deserialize<ProductsResponse>(content);
 
-            var products = result?.products.Values.Select(x => Product
-                .CreateNew(x.id, x.ean, x.sku, x.name, x.stock.First().Value, x.prices.First().Value))
-                .ToList();
-
-            return Result.Ok(products ?? []);
+            return Result.Ok(result);
         }
     }
 }

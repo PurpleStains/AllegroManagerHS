@@ -1,4 +1,5 @@
 ﻿using AllegroConnector.BuildingBlocks.Application.Data;
+using AllegroConnector.BuildingBlocks.Infrastructure.InternalCommands;
 using BaselinkerConnector.Application.Configuration.Commands;
 using Dapper;
 using Newtonsoft.Json;
@@ -6,19 +7,14 @@ using Polly;
 
 namespace BaselinkerConnector.Infrastructure.Configuration.Processing.InternalCommands
 {
-    internal class ProcessInternalCommandsCommandHandler : ICommandHandler<ProcessInternalCommandsCommand>
+    internal class ProcessInternalCommandsCommandHandler(
+        ISqlConnectionFactory sqlConnectionFactory,
+        IInternalCommandsMapper internalCommandsMapper)
+        : ICommandHandler<ProcessInternalCommandsCommand>
     {
-        private readonly ISqlConnectionFactory _sqlConnectionFactory;
-
-        public ProcessInternalCommandsCommandHandler(
-            ISqlConnectionFactory sqlConnectionFactory)
-        {
-            _sqlConnectionFactory = sqlConnectionFactory;
-        }
-
         public async Task Handle(ProcessInternalCommandsCommand command, CancellationToken cancellationToken)
         {
-            var connection = this._sqlConnectionFactory.GetOpenConnection();
+            var connection = sqlConnectionFactory.GetOpenConnection();
 
             const string sql = $"""
                                 SELECT 
@@ -67,7 +63,7 @@ namespace BaselinkerConnector.Infrastructure.Configuration.Processing.InternalCo
         private async Task ProcessCommand(
             InternalCommandDto internalCommand)
         {
-            Type type = Assemblies.Application.GetType(internalCommand.Type);
+            Type type = internalCommandsMapper.GetType(internalCommand.Type);
             dynamic commandToProcess = JsonConvert.DeserializeObject(internalCommand.Data, type);
 
             await CommandsExecutor.Execute(commandToProcess);

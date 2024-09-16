@@ -5,13 +5,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BaselinkerConnector.Infrastructure.Configuration.Processing
 {
-    internal class UnitOfWorkCommandHandlerDecorator<T>(
+    public class UnitOfWorkCommandHandlerDecorator<T>
+        : ICommandHandler<T> where T : ICommand
+    {
+        private readonly ICommandHandler<T> decorated;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly BaselinkerContext baselinkerContext;
+
+        public UnitOfWorkCommandHandlerDecorator(
             ICommandHandler<T> decorated,
             IUnitOfWork unitOfWork,
-            BaselinkerContext baselinkerContext) 
-        : ICommandHandler<T>
-        where T : ICommand
-    {
+            BaselinkerContext context)
+        {
+            this.decorated = decorated;
+            this.unitOfWork = unitOfWork;
+            this.baselinkerContext = context;
+        }
+
         public async Task Handle(T command, CancellationToken cancellationToken)
         {
             await decorated.Handle(command, cancellationToken);

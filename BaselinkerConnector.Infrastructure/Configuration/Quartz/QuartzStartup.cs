@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using BaselinkerConnector.Infrastructure.Configuration.Processing.InternalCommands;
 using Quartz;
 using Serilog;
 
@@ -26,6 +27,18 @@ namespace BaselinkerConnector.Infrastructure.Configuration.Quartz
                 .Build();
 
             scheduler. ScheduleJob(processProductsJob, processProductsTrigger);
+
+            var processInternalCommandsJob = JobBuilder.Create<ProcessInternalCommandsJob>().Build();
+
+            ITrigger triggerCommandsProcessing=
+                    TriggerBuilder
+                        .Create()
+                        .StartNow()
+                        .WithCronSchedule("0/2 * * ? * *")
+                        .Build();
+            
+
+            scheduler.ScheduleJob(processInternalCommandsJob, triggerCommandsProcessing).GetAwaiter().GetResult();
 
             _logger.Information("Quartz started.");
         }

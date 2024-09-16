@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AllegroConnector.Application\AllegroConnector.Application.csproj" />
     <ProjectReference Include="..\AllegroConnector.BuildingBlocks.Domain\AllegroConnector.BuildingBlocks.Domain.csproj" />
     <ProjectReference Include="..\AllegroConnector.BuildingBlocks.Infrastructure\AllegroConnector.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\BaselinkerConnector.Domain\BaselinkerConnector.Domain.csproj" />

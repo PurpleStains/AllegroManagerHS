@@ -8,7 +8,7 @@ namespace BaselinkerConnector.Infrastructure.Domain.Products
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable("Product");
+            builder.ToTable("Product", "baselinker");
 
             builder.HasKey(p => p.Id);
 

@@ -5,6 +5,7 @@ using Autofac.Features.Variance;
 using BaselinkerConnector.Application.Configuration.Commands;
 using BaselinkerConnector.Application.Contracts;
 using BaselinkerConnector.Infrastructure.Configuration.Pipelines;
+using BaselinkerConnector.Infrastructure.Configuration.Processing;
 using MediatR;
 using MediatR.Pipeline;
 using System.Reflection;
@@ -44,7 +45,7 @@ namespace BaselinkerConnector.Infrastructure.Configuration.Mediation
             foreach (var mediatorOpenType in mediatorOpenTypes)
             {
                 builder
-                    .RegisterAssemblyTypes(typeof(IBaselinkerModule).Assembly, ThisAssembly)
+                    .RegisterAssemblyTypes(Assemblies.Application, ThisAssembly)
                     .AsClosedTypesOf(mediatorOpenType)
                     .AsImplementedInterfaces()
                     .FindConstructorsWith(new AllConstructorFinder());

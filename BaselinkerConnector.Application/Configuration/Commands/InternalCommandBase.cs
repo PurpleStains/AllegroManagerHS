@@ -1,5 +1,4 @@
-﻿
-using BaselinkerConnector.Application.Contracts;
+﻿using BaselinkerConnector.Application.Contracts;
 
 namespace BaselinkerConnector.Application.Configuration.Commands
 {

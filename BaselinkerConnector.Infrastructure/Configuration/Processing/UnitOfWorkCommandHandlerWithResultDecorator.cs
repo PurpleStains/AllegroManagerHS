@@ -1,12 +1,11 @@
-﻿
-using AllegroConnector.BuildingBlocks.Infrastructure;
+﻿using AllegroConnector.BuildingBlocks.Infrastructure;
 using BaselinkerConnector.Application.Configuration.Commands;
 using BaselinkerConnector.Application.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaselinkerConnector.Infrastructure.Configuration.Processing
 {
-    internal class UnitOfWorkCommandHandlerWithResultDecorator<T, TResult>
+    public class UnitOfWorkCommandHandlerWithResultDecorator<T, TResult>
         (
             ICommandHandler<T, TResult> decorated,
             IUnitOfWork unitOfWork,
@@ -22,7 +21,8 @@ namespace BaselinkerConnector.Infrastructure.Configuration.Processing
 
             if (command is InternalCommandBase<TResult>)
             {
-                var internalCommand = await baselinkerContext.InternalCommands.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
+                var internalCommand = await baselinkerContext.InternalCommands
+                    .FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
 
                 if (internalCommand != null)
                 {

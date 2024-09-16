@@ -4,7 +4,9 @@ using AllegroConnector.BuildingBlocks.Infrastructure;
 using AllegroConnector.BuildingBlocks.Infrastructure.DomainEventsDispatching;
 using Autofac;
 using BaselinkerConnector.Application.Configuration.Commands;
+using BaselinkerConnector.Application.Contracts;
 using BaselinkerConnector.Infrastructure.Configuration.Processing.InternalCommands;
+using CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration.Processing;
 using MediatR;
 
 namespace BaselinkerConnector.Infrastructure.Configuration.Processing
@@ -31,11 +33,11 @@ namespace BaselinkerConnector.Infrastructure.Configuration.Processing
 
             builder.RegisterGenericDecorator(
                 typeof(UnitOfWorkCommandHandlerDecorator<>),
-                typeof(ICommandHandler<>));
+                typeof(IRequestHandler<>));
 
             builder.RegisterGenericDecorator(
                 typeof(UnitOfWorkCommandHandlerWithResultDecorator<,>),
-                typeof(ICommandHandler<,>));
+                typeof(IRequestHandler<,>));
 
             //builder.RegisterGenericDecorator(
             //    typeof(ValidationCommandHandlerDecorator<>),
@@ -49,15 +51,15 @@ namespace BaselinkerConnector.Infrastructure.Configuration.Processing
             //    typeof(LoggingCommandHandlerDecorator<>),
             //    typeof(IRequestHandler<>));
 
-            //builder.RegisterGenericDecorator(
-            //    typeof(LoggingCommandHandlerWithResultDecorator<,>),
-            //    typeof(IRequestHandler<,>));
+            builder.RegisterGenericDecorator(
+                typeof(LoggingCommandHandlerWithResultDecorator<,>),
+                typeof(IRequestHandler<,>));
 
             builder.RegisterGenericDecorator(
                 typeof(DomainEventsDispatcherNotificationHandlerDecorator<>),
                 typeof(INotificationHandler<>));
 
-            builder.RegisterAssemblyTypes(Assemblies.Application)
+            builder.RegisterAssemblyTypes(typeof(IBaselinkerModule).Assembly)
                 .AsClosedTypesOf(typeof(IDomainEventNotification<>))
                 .InstancePerDependency()
                 .FindConstructorsWith(new AllConstructorFinder());

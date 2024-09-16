@@ -1,12 +1,17 @@
-﻿using Autofac;
+﻿using AllegroConnector.BuildingBlocks.Infrastructure;
+using Autofac;
 using BaselinkerConnector.Application.BaselinkerApi;
 using BaselinkerConnector.Application.Option;
 using BaselinkerConnector.Application.Products;
+using BaselinkerConnector.Application.Products.CreateProduct;
 using BaselinkerConnector.Domain;
 using BaselinkerConnector.Domain.Products;
 using BaselinkerConnector.Infrastructure.Configuration.DataAccess;
 using BaselinkerConnector.Infrastructure.Configuration.Logging;
 using BaselinkerConnector.Infrastructure.Configuration.Mediation;
+using BaselinkerConnector.Infrastructure.Configuration.Processing;
+using BaselinkerConnector.Infrastructure.Configuration.Processing.InternalCommands;
+using BaselinkerConnector.Infrastructure.Configuration.Processing.Outbox;
 using BaselinkerConnector.Infrastructure.Configuration.Quartz;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -33,6 +38,8 @@ namespace BaselinkerConnector.Infrastructure.Configuration
                 options,
                 httpClientFactory,
                 moduleLogger);
+
+            QuartzStartup.Initialize(logger, _container);
         }
 
         private static void ConfigureCompositionRoot(
@@ -46,10 +53,20 @@ namespace BaselinkerConnector.Infrastructure.Configuration
             containerBuilder.RegisterInstance(options);
 
             containerBuilder.RegisterModule(new LoggingModule(logger));
-            containerBuilder.RegisterModule(new QuartzModule());
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new MediatorModule());
+            containerBuilder.RegisterModule(new ProcessingModule());
+            BiDictionary<string, Type> internalCommandsMap = new BiDictionary<string, Type>();
+            internalCommandsMap.Add("CreateProductCommand", typeof(CreateProductCommand));
+            containerBuilder.RegisterModule(new InternalCommandsModule(internalCommandsMap));
+
+            var domainNotificationsMap = new BiDictionary<string, Type>();
+            containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));
+            containerBuilder.RegisterModule(new QuartzModule());
+
             containerBuilder.RegisterInstance(executionContextAccessor);
+
+
             containerBuilder.RegisterType<ProductsService>()
                 .As<IProductsService>()
                 .InstancePerLifetimeScope();
@@ -74,8 +91,6 @@ namespace BaselinkerConnector.Infrastructure.Configuration
             _container = containerBuilder.Build();
 
             BaselinkerConnectorCompositionRoot.SetContainer(_container);
-
-            QuartzStartup.Initialize(logger, _container);
         }
     }
 }

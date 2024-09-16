@@ -1,15 +1,15 @@
 ﻿using BaselinkerConnector.Application.BaselinkerApi.Requests.Responses;
+using BaselinkerConnector.Application.Configuration.Commands;
 using BaselinkerConnector.Application.Option;
 using BaselinkerConnector.Domain;
 using FluentResults;
-using MediatR;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
     public class GetProductDetailsRequestHandler(IBaselinkerClient client, IOptions<BaselinkerOption> options) : 
-        IRequestHandler<GetProductDetailsRequest, Result<ProductsDetailsResponse>>
+        ICommandHandler<GetProductDetailsRequest, Result<ProductsDetailsResponse>>
     {
 
         private const string Method = "getInventoryProductsData";

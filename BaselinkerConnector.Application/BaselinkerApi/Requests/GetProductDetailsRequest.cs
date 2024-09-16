@@ -1,10 +1,10 @@
-﻿using AllegroConnector.Application.Contracts;
-using BaselinkerConnector.Application.BaselinkerApi.Requests.Responses;
+﻿using BaselinkerConnector.Application.BaselinkerApi.Requests.Responses;
+using BaselinkerConnector.Application.Contracts;
 using FluentResults;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
-    public class GetProductDetailsRequest : HttpCallRequestBase<Result<ProductsDetailsResponse>> 
+    public class GetProductDetailsRequest : CommandBase<Result<ProductsDetailsResponse>> 
     { 
         public int ProductId { get; set; }
     }
