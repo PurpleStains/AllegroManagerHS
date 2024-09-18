@@ -7,15 +7,20 @@ namespace AllegroConnector.Domain.Offer
         public Guid AllegroOfferId { get; private set; }
         public string OfferId { get; private set; }
         public string CategoryId { get; private set; }
+        public string EAN { get; private set; }
         public string Name { get; private set; }
         public int Stock { get; private set; }
         public string PublicationStatus { get; private set; }
         public string? PriceGross { get; private set; }
+
         public virtual ICollection<OrderLineItem> OrderLineItems { get; private set; } = new List<OrderLineItem>();
+
+        public AllegroOffer() { }
         private AllegroOffer(
             Guid allegroOfferId,
             string offerId,
             string categoryId,
+            string ean,
             string name,
             int stock,
             string publicationStatus,
@@ -25,6 +30,7 @@ namespace AllegroConnector.Domain.Offer
             AllegroOfferId = allegroOfferId;
             OfferId = offerId;
             CategoryId = categoryId;
+            EAN = ean;
             Name = name;
             Stock = stock;
             PublicationStatus = publicationStatus;
@@ -35,6 +41,7 @@ namespace AllegroConnector.Domain.Offer
             Guid allegroOfferId,
             string offerId,
             string categoryId,
+            string ean,
             string name,
             int stock,
             string publicationStatus,
@@ -44,6 +51,7 @@ namespace AllegroConnector.Domain.Offer
             allegroOfferId,
             offerId,
             categoryId,
+            ean,
             name,
             stock,
             publicationStatus,

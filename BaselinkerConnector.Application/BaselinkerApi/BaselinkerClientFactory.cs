@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace BaselinkerConnector.Application.BaselinkerApi
 {
-    public class BaselinkerClient(HttpClient client, IOptions<BaselinkerOption> options) : IBaselinkerClient
+    public class BaselinkerClientFactory(HttpClient client, IOptions<BaselinkerOption> options) : IBaselinkerClientFactory
     {
         public HttpClient Client()
         {

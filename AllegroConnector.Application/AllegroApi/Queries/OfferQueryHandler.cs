@@ -15,7 +15,7 @@ namespace AllegroConnector.Application.AllegroApi.Queries
 
         public async Task<ConcreteProductOfferResponse> Handle(OfferQuery request, CancellationToken cancellationToken)
         {
-            var result = await _apiClinet.GetOffers(request.OfferId);
+            var result = await _apiClinet.GetOfferDetails(request.OfferId);
 
             return result;
         }

@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
-    public class GetProductDetailsRequestHandler(IBaselinkerClient client, IOptions<BaselinkerOption> options) : 
+    public class GetProductDetailsRequestHandler(IBaselinkerClientFactory client, IOptions<BaselinkerOption> options) : 
         ICommandHandler<GetProductDetailsRequest, Result<ProductsDetailsResponse>>
     {
 

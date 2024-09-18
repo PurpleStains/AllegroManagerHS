@@ -17,7 +17,7 @@ namespace AllegroConnector.Application.AllegroApi.Queries
         {
             var csvReader = new CsvGenericWriter();
             var product = csvReader.Products().Find(x => x.auction_id.Equals(query.OfferId));
-            var fromAllegro = await apiClient.GetOffers(product.auction_id);
+            var fromAllegro = await apiClient.GetOfferDetails(product.auction_id);
             var offer = await offersRepository.GetByIdAsync(product.auction_id);
             var request = new CalculateFeeRequest()
             {

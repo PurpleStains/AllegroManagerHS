@@ -8,11 +8,7 @@ namespace BaselinkerConnector.Application.Products.Commands
     {
         public async Task Handle(ProcessProductsCommand request, CancellationToken cancellationToken)
         {
-            logger.Information($"Processing products execution started at: {DateTime.UtcNow}");
-
             await service.ProcessProducts();
-
-            logger.Information($"Processing products execution finished at: {DateTime.UtcNow}");
         }
     }
 }

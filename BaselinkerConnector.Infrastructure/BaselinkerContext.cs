@@ -10,7 +10,7 @@ namespace BaselinkerConnector.Infrastructure
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<InternalCommand> InternalCommands { get; set; }
-        public BaselinkerContext(DbContextOptions options) : base(options) { }
+        public BaselinkerContext(DbContextOptions<BaselinkerContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -9,7 +9,7 @@ namespace AllegroConnector.Domain
     {
         Task<SaleOffersResponse> SaleOffers(string limit, string offset);
         Task<CategoryResponse> GetCategories();
-        Task<ConcreteProductOfferResponse> GetOffers(string offerID);
+        Task<ConcreteProductOfferResponse> GetOfferDetails(string offerID);
         Task<CalculatedFeeResponse> CalculateOfferFee(CalculateFeeRequest request);
         Task<CheckoutFormResponse> GetOrders(string limit, string offset);
         Task<BillingEntries> GetBillingForOrder(Guid orderId);

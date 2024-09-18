@@ -26,6 +26,7 @@ namespace AllegroConnector.Application.AllegroApi.Queries
                     Guid.NewGuid(),
                     offer.id,
                     offer.category.id,
+                    null,
                     offer.name,
                     offer.stock.available,
                     offer.publication.status,

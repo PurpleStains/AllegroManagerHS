@@ -21,6 +21,7 @@ namespace AllegroConnector.Application.AllegroApi
             ]);
 
             var response = await client.SendAsync(request);
+            var message = await response.Content.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             var offers = JsonSerializer.Deserialize<SaleOffersResponse>(await response.Content.ReadAsStringAsync());
             return offers;
@@ -35,12 +36,13 @@ namespace AllegroConnector.Application.AllegroApi
             return categories;
         }
 
-        public async Task<ConcreteProductOfferResponse> GetOffers(string offerID)
+        public async Task<ConcreteProductOfferResponse> GetOfferDetails(string offerID)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"sale/product-offers/{offerID}");
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            var offer = JsonSerializer.Deserialize<ConcreteProductOfferResponse>(await response.Content.ReadAsStringAsync());
+            var message = await response.Content.ReadAsStringAsync();
+            var offer = JsonSerializer.Deserialize<ConcreteProductOfferResponse>(message);
             return offer;
         }
 

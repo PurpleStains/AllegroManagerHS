@@ -1,9 +1,17 @@
-﻿using AllegroConnector.Domain.OAuthToken;
+﻿using AllegroConnector.Application.Offers.Create;
+using AllegroConnector.Application.Validation;
+using AllegroConnector.BuildingBlocks.Infrastructure;
+using AllegroConnector.Domain.EAN;
+using AllegroConnector.Domain.OAuthToken;
 using AllegroConnector.Infrastructure.Configuration.DataAccess;
 using AllegroConnector.Infrastructure.Configuration.HttpClient;
 using AllegroConnector.Infrastructure.Configuration.Logging;
 using AllegroConnector.Infrastructure.Configuration.Mapper;
 using AllegroConnector.Infrastructure.Configuration.Mediation;
+using AllegroConnector.Infrastructure.Configuration.Processing;
+using AllegroConnector.Infrastructure.Configuration.Processing.InternalCommands;
+using AllegroConnector.Infrastructure.Configuration.Processing.Outbox;
+using AllegroConnector.Infrastructure.Configuration.Quartz;
 using AllegroConnector.Infrastructure.Domain.AllegroOAuthToken;
 using Autofac;
 using AutoMapper;
@@ -29,6 +37,8 @@ namespace AllegroConnector.Infrastructure.Configuration
                 clientId,
                 httpClientFactory,
                 moduleLogger);
+
+            QuartzStartup.Initialize(logger, _container);
         }
 
         public static void Stop()
@@ -46,12 +56,24 @@ namespace AllegroConnector.Infrastructure.Configuration
             containerBuilder.RegisterModule(new LoggingModule(logger));
 
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
-            //containerBuilder.RegisterModule(new ProcessingModule());
+            containerBuilder.RegisterModule(new ProcessingModule());
             //containerBuilder.RegisterModule(new EventsBusModule(eventsBus));
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new AllegroClientModule(clientId));
+
+            BiDictionary<string, Type> internalCommandsMap = new BiDictionary<string, Type>();
+            internalCommandsMap.Add("CreateOfferCommand", typeof(CreateOfferCommand));
+            containerBuilder.RegisterModule(new InternalCommandsModule(internalCommandsMap));
+            var domainNotificationsMap = new BiDictionary<string, Type>();
+            containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));
+            containerBuilder.RegisterModule(new QuartzModule());
+
             //containerBuilder.RegisterModule(new AuthenticationModule());
             containerBuilder.RegisterInstance(executionContextAccessor);
+
+            // Custom registration
+            containerBuilder.RegisterType<EANValidator>().As<IEANValidator>().InstancePerDependency();
+
             RegisterMapper(containerBuilder);
 
             _container = containerBuilder.Build();

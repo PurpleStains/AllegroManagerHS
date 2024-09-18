@@ -1,6 +1,6 @@
 ﻿namespace BaselinkerConnector.Domain
 {
-    public interface IBaselinkerClient
+    public interface IBaselinkerClientFactory
     {
         public HttpClient Client();
     }

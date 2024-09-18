@@ -1,6 +1,7 @@
-﻿using AllegroConnector.Application.AllegroApi.Commands;
-using AllegroConnector.Application.AllegroApi.Queries;
+﻿using AllegroConnector.Application.AllegroApi.Queries;
 using AllegroConnector.Application.Contracts;
+using AllegroConnector.Application.Imports.ImportOffers;
+using AllegroManager.Modules.Allegro.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,6 +49,13 @@ namespace AllegroManager.Modules.Allegro
         public async Task<IActionResult> Incomes([FromQuery] DateTime from, DateTime to)
         {
             var response = await allegroModule.ExecuteQueryAsync(new IncomesQuery(from, to));
+            return Ok(response);
+        }
+
+        [HttpPost("import")]
+        public async Task<IActionResult> ImportOffers([FromBody] PlainOffers offers)
+        {
+            var response = await allegroModule.ExecuteCommandAsync(new ImportOffersCommand(offers.Offers));
             return Ok(response);
         }
     }

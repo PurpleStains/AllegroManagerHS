@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace BaselinkerConnector.Application.BaselinkerApi.Requests
 {
-    public class GetProductsRequestHandler(IBaselinkerClient client, ILogger logger)
+    public class GetProductsRequestHandler(IBaselinkerClientFactory client, ILogger logger)
         : ICommandHandler<GetProductsRequest, Result<ProductsResponse>>
     {
         private const string Method = "getInventoryProductsList";

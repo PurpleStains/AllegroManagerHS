@@ -83,10 +83,10 @@ namespace BaselinkerConnector.Infrastructure.Configuration
             containerBuilder.Register(ctx =>
             {
                 var httpClientFactory = ctx.Resolve<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient(nameof(BaselinkerClient));
+                var httpClient = httpClientFactory.CreateClient(nameof(BaselinkerClientFactory));
                 var options = ctx.Resolve<IOptions<BaselinkerOption>>();
-                return new BaselinkerClient(httpClient, options);
-            }).As<IBaselinkerClient>();
+                return new BaselinkerClientFactory(httpClient, options);
+            }).As<IBaselinkerClientFactory>();
 
             _container = containerBuilder.Build();
 

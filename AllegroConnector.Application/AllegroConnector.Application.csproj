@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AllegroConnector.BuildingBlocks.Application\AllegroConnector.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="..\AllegroConnector.BuildingBlocks.Domain\AllegroConnector.BuildingBlocks.Domain.csproj" />
     <ProjectReference Include="..\AllegroConnector.BuildingBlocks.Infrastructure\AllegroConnector.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\AllegroConnector.Domain\AllegroConnector.Domain.csproj" />
