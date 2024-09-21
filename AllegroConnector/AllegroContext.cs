@@ -1,4 +1,5 @@
-﻿using AllegroConnector.BuildingBlocks.Infrastructure.InternalCommands;
+﻿using AllegroConnector.BuildingBlocks.Application.Outbox;
+using AllegroConnector.BuildingBlocks.Infrastructure.InternalCommands;
 using AllegroConnector.Domain.OAuthToken;
 using AllegroConnector.Domain.Offer;
 using AllegroConnector.Domain.Orders;
@@ -15,7 +16,7 @@ namespace AllegroConnector.Infrastructure
         public DbSet<AllegroOffer> AllegroOffers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderLineItem> OrderLineItems { get; set; }
-
+        public DbSet<OutboxMessage> OutboxMessages { get; set; }
         public AllegroContext(DbContextOptions<AllegroContext> options) : base(options) {}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

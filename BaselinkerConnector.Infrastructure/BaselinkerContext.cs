@@ -1,4 +1,5 @@
-﻿using AllegroConnector.BuildingBlocks.Infrastructure.InternalCommands;
+﻿using AllegroConnector.BuildingBlocks.Application.Outbox;
+using AllegroConnector.BuildingBlocks.Infrastructure.InternalCommands;
 using BaselinkerConnector.Domain.Products;
 using BaselinkerConnector.Infrastructure.Domain.Products;
 using BaselinkerConnector.Infrastructure.InternalCommands;
@@ -10,6 +11,7 @@ namespace BaselinkerConnector.Infrastructure
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<InternalCommand> InternalCommands { get; set; }
+        public DbSet<OutboxMessage> OutboxMessages { get; set; }
         public BaselinkerContext(DbContextOptions<BaselinkerContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

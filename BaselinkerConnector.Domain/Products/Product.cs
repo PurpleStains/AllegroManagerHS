@@ -1,4 +1,5 @@
 ﻿using AllegroConnector.BuildingBlocks.Domain;
+using BaselinkerConnector.Domain.Products.Events;
 
 namespace BaselinkerConnector.Domain.Products
 {
@@ -22,6 +23,8 @@ namespace BaselinkerConnector.Domain.Products
             Name = name;
             Stock = stock;
             AveragePrice = averagePrice;
+
+            this.AddDomainEvent(new ProductCreatedDomainEvent(Id, ProductId));
         }
 
         public static Product CreateNew(int productId, string ean, string sku, string name, int stock, double averagePrice)

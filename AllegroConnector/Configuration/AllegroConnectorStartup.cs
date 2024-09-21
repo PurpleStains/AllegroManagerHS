@@ -1,9 +1,11 @@
 ﻿using AllegroConnector.Application.Offers.Create;
+using AllegroConnector.Application.Offers.Update;
 using AllegroConnector.Application.Validation;
 using AllegroConnector.BuildingBlocks.Infrastructure;
+using AllegroConnector.BuildingBlocks.Infrastructure.EventBus;
 using AllegroConnector.Domain.EAN;
-using AllegroConnector.Domain.OAuthToken;
 using AllegroConnector.Infrastructure.Configuration.DataAccess;
+using AllegroConnector.Infrastructure.Configuration.EventBus;
 using AllegroConnector.Infrastructure.Configuration.HttpClient;
 using AllegroConnector.Infrastructure.Configuration.Logging;
 using AllegroConnector.Infrastructure.Configuration.Mapper;
@@ -12,7 +14,6 @@ using AllegroConnector.Infrastructure.Configuration.Processing;
 using AllegroConnector.Infrastructure.Configuration.Processing.InternalCommands;
 using AllegroConnector.Infrastructure.Configuration.Processing.Outbox;
 using AllegroConnector.Infrastructure.Configuration.Quartz;
-using AllegroConnector.Infrastructure.Domain.AllegroOAuthToken;
 using Autofac;
 using AutoMapper;
 using Serilog;
@@ -27,7 +28,7 @@ namespace AllegroConnector.Infrastructure.Configuration
             string clientId,
             IHttpClientFactory httpClientFactory,
             ILogger logger,
-            //IEventsBus eventsBus,
+            IEventsBus eventsBus,
             long? internalProcessingPoolingInterval = null)
         {
             var moduleLogger = logger.ForContext("Module", "AllegroConnector");
@@ -36,9 +37,12 @@ namespace AllegroConnector.Infrastructure.Configuration
                 connectionString,
                 clientId,
                 httpClientFactory,
-                moduleLogger);
+                moduleLogger,
+                eventsBus);
 
             QuartzStartup.Initialize(logger, _container);
+
+            EventsBusStartup.Initialize(moduleLogger);
         }
 
         public static void Stop()
@@ -50,19 +54,21 @@ namespace AllegroConnector.Infrastructure.Configuration
             string connectionString,
             string clientId,
             IHttpClientFactory executionContextAccessor,
-            ILogger logger)
+            ILogger logger,
+            IEventsBus eventsBus)
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new LoggingModule(logger));
 
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new ProcessingModule());
-            //containerBuilder.RegisterModule(new EventsBusModule(eventsBus));
+            containerBuilder.RegisterModule(new EventsBusModule(eventsBus));
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new AllegroClientModule(clientId));
 
             BiDictionary<string, Type> internalCommandsMap = new BiDictionary<string, Type>();
             internalCommandsMap.Add("CreateOfferCommand", typeof(CreateOfferCommand));
+            internalCommandsMap.Add("UpdateOfferBuyPriceGrossCommand", typeof(UpdateOfferBuyPriceGrossCommand));
             containerBuilder.RegisterModule(new InternalCommandsModule(internalCommandsMap));
             var domainNotificationsMap = new BiDictionary<string, Type>();
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));

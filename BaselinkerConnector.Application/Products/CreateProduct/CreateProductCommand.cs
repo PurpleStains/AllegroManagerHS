@@ -6,7 +6,8 @@ namespace BaselinkerConnector.Application.Products.CreateProduct
     public class CreateProductCommand : InternalCommandBase
     {
         [JsonConstructor]
-        public CreateProductCommand(Guid id, int productId, string ean, string sku, string name, int stock, double averagePrice) : base(id)
+        public CreateProductCommand(Guid id, int productId, string ean, string sku, string name, int stock,
+            double averagePrice) : base(id)
         {
             ProductId = productId;
             Ean = ean;

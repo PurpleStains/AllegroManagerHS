@@ -8,7 +8,7 @@ namespace AllegroConnector.Infrastructure.Outbox
     {
         public void Configure(EntityTypeBuilder<OutboxMessage> builder)
         {
-            builder.ToTable("OutboxMessages", "meetings");
+            builder.ToTable("OutboxMessages", "allegro");
 
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Id).ValueGeneratedNever();

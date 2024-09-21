@@ -4,18 +4,11 @@ using BaselinkerConnector.Infrastructure;
 
 namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Outbox
 {
-    public class OutboxAccessor : IOutbox
+    public class OutboxAccessor(BaselinkerContext baselinkerContext) : IOutbox
     {
-        private readonly BaselinkerContext _baselinkerContext;
-
-        internal OutboxAccessor(BaselinkerContext meetingsContext)
-        {
-            _baselinkerContext = meetingsContext;
-        }
-
         public void Add(OutboxMessage message)
         {
-            //_meetingsContext.OutboxMessages.Add(message);
+            baselinkerContext.OutboxMessages.Add(message);
         }
 
         public Task Save()

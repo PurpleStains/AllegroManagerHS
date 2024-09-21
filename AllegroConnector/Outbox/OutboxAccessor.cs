@@ -14,7 +14,7 @@ namespace AllegroConnector.Infrastructure.Outbox
 
         public void Add(OutboxMessage message)
         {
-            //_meetingsContext.OutboxMessages.Add(message);
+            allegroContext.OutboxMessages.Add(message);
         }
 
         public Task Save()

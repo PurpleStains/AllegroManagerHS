@@ -86,8 +86,8 @@ Serilog.ILogger ConfigureLogger()
 void InitializeModules(ILifetimeScope services)
 {
     var httpClientFactory = services.Resolve<IHttpClientFactory>();
-    AllegroConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger);
-    BaselinkerConnectorStartup.Initialize(connectionString, clientId, baselinkerConfig, httpClientFactory, _logger);
+    AllegroConnectorStartup.Initialize(connectionString, clientId, httpClientFactory, _logger, null);
+    BaselinkerConnectorStartup.Initialize(connectionString, clientId, baselinkerConfig, httpClientFactory, _logger, null);
 }
 
 void ConfigureHttpClients(IServiceCollection services)

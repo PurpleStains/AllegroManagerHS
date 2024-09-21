@@ -19,5 +19,10 @@ namespace BaselinkerConnector.Infrastructure.Domain.Products
         {
             return await context.Products.FirstOrDefaultAsync(x => x.ProductId.Equals(id));
         }
+
+        public async Task<Product?> GetByIdAsync(Guid id)
+        {
+            return await context.Products.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        }
     }
 }

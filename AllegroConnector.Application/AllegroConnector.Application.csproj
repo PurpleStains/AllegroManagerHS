@@ -18,6 +18,7 @@
     <ProjectReference Include="..\AllegroConnector.BuildingBlocks.Infrastructure\AllegroConnector.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\AllegroConnector.Domain\AllegroConnector.Domain.csproj" />
     <ProjectReference Include="..\AllegroConnector.IntegrationEvents\AllegroConnector.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\BaselinkerConnector.IntegrationEvents\BaselinkerConnector.IntegrationEvents.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

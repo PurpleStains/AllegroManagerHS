@@ -1,12 +1,15 @@
 ﻿using AllegroConnector.BuildingBlocks.Infrastructure;
+using AllegroConnector.BuildingBlocks.Infrastructure.EventBus;
 using Autofac;
 using BaselinkerConnector.Application.BaselinkerApi;
 using BaselinkerConnector.Application.Option;
 using BaselinkerConnector.Application.Products;
 using BaselinkerConnector.Application.Products.CreateProduct;
+using BaselinkerConnector.Application.Products.UpdateProduct;
 using BaselinkerConnector.Domain;
 using BaselinkerConnector.Domain.Products;
 using BaselinkerConnector.Infrastructure.Configuration.DataAccess;
+using BaselinkerConnector.Infrastructure.Configuration.EventBus;
 using BaselinkerConnector.Infrastructure.Configuration.Logging;
 using BaselinkerConnector.Infrastructure.Configuration.Mediation;
 using BaselinkerConnector.Infrastructure.Configuration.Processing;
@@ -28,6 +31,7 @@ namespace BaselinkerConnector.Infrastructure.Configuration
             IConfigurationSection options,
             IHttpClientFactory httpClientFactory,
             ILogger logger,
+            IEventsBus eventsBus,
             long? internalProcessingPoolingInterval = null)
         {
             var moduleLogger = logger.ForContext("Module", "BaselinkerConnector");
@@ -37,7 +41,8 @@ namespace BaselinkerConnector.Infrastructure.Configuration
                 clientId,
                 options,
                 httpClientFactory,
-                moduleLogger);
+                moduleLogger,
+                eventsBus);
 
             QuartzStartup.Initialize(logger, _container);
         }
@@ -47,7 +52,8 @@ namespace BaselinkerConnector.Infrastructure.Configuration
             string clientId,
             IConfigurationSection options,
             IHttpClientFactory executionContextAccessor,
-            ILogger logger)
+            ILogger logger,
+            IEventsBus eventsBus)
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterInstance(options);
@@ -56,11 +62,14 @@ namespace BaselinkerConnector.Infrastructure.Configuration
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new ProcessingModule());
+            containerBuilder.RegisterModule(new EventsBusModule(eventsBus));
             BiDictionary<string, Type> internalCommandsMap = new BiDictionary<string, Type>();
             internalCommandsMap.Add("CreateProductCommand", typeof(CreateProductCommand));
+            internalCommandsMap.Add("UpdateProductCommand", typeof(UpdateProductCommand));
             containerBuilder.RegisterModule(new InternalCommandsModule(internalCommandsMap));
 
             var domainNotificationsMap = new BiDictionary<string, Type>();
+            domainNotificationsMap.Add("ProductCreatedNotification", typeof(ProductCreatedNotification));
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));
             containerBuilder.RegisterModule(new QuartzModule());
 
