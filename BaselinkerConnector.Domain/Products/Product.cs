@@ -35,6 +35,8 @@ namespace BaselinkerConnector.Domain.Products
         public void SetAverageGrossPriceBuy(double price)
         {
             AverageGrossPriceBuy = price;
+
+             this.AddDomainEvent(new ProductBuyPriceUpdatedDomainEvent(Id, Ean, AverageGrossPriceBuy));
         }
     }
 }

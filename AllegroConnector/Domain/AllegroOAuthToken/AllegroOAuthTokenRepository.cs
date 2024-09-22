@@ -25,7 +25,7 @@ namespace AllegroConnector.Infrastructure.Domain.AllegroOAuthToken
         {
             var result = _context.AllegroOAuthTokens.AsQueryable().OrderByDescending(x => x.DateTimeStamp).FirstOrDefault();
 
-            if (result is null || result?.ExpiresIn <= DateTime.Now)
+            if (result is null)
                 return default;
 
             return result;

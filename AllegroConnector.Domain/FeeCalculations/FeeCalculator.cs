@@ -14,9 +14,10 @@ namespace AllegroConnector.Domain.FeeCalculations
         {
             var allegroBuyPriceGross = calculation.AuctionBuyPriceGross.ToDouble();
             var packageFee = _allegroPackageFee.Fee(allegroBuyPriceGross);
+            var fee = calculation.AllegroFee + packageFee;
             var income = allegroBuyPriceGross
                 - calculation.BuyPriceGross
-                - calculation.AllegroFee;
+                - fee;
 
             var margin = income / calculation.AuctionBuyPriceGross.ToDouble() * 100;
 
@@ -26,6 +27,7 @@ namespace AllegroConnector.Domain.FeeCalculations
                 BuyPrice = calculation.BuyPriceGross,
                 BasisFee = calculation.AllegroFee,
                 PackageFee = packageFee,
+                SummedFee = fee,
                 Income = income,
                 Margin = margin
             };

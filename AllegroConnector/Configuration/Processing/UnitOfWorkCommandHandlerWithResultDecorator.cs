@@ -1,6 +1,7 @@
 ﻿using AllegroConnector.Application.Commands;
 using AllegroConnector.Application.Contracts;
 using AllegroConnector.BuildingBlocks.Infrastructure;
+using AllegroConnector.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace AllegroConnector.Infrastructure.Configuration.Processing
@@ -19,7 +20,7 @@ namespace AllegroConnector.Infrastructure.Configuration.Processing
         {
             var result = await decorated.Handle(command, cancellationToken);
 
-            if (command is AllegroConnector.Configuration.InternalCommandBase<TResult>)
+            if (command is InternalCommandBase<TResult>)
             {
                 var internalCommand = await allegroContext.InternalCommands
                     .FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);

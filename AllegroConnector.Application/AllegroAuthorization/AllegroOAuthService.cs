@@ -1,4 +1,5 @@
 ﻿using AllegroConnector.Application.AllegroAuthorization;
+using AllegroConnector.Domain.OAuthToken;
 using FluentResults;
 using Newtonsoft.Json;
 
@@ -33,6 +34,27 @@ namespace AllegroConnector.Application.AllegroOAuth
             ]);
             var response = await _client.SendAsync(request, token);
             var responseString = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return Result.Ok<AuthResponse>(JsonConvert.DeserializeObject<AuthResponse>(responseString));
+            }
+
+            var errorResponse = JsonConvert.DeserializeObject<AuthErrorResponse>(responseString);
+            return Result.Fail(errorResponse.error_description);
+        }
+
+        public async Task<Result<AuthResponse>> RefreshToken(AllegroOAuthToken credential, CancellationToken token)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "token");
+            request.Content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("grant_type", "refresh_token"),
+                new KeyValuePair<string, string>("refresh_token", credential.RefreshToken)
+            });
+
+            var response = await _client.SendAsync(request, token);
+            var responseString = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
                 return Result.Ok<AuthResponse>(JsonConvert.DeserializeObject<AuthResponse>(responseString));

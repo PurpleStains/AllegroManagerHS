@@ -1,5 +1,6 @@
 ﻿using AllegroConnector.Infrastructure.Configuration.Processing.Inbox;
 using AllegroConnector.Infrastructure.Configuration.Processing.InternalCommands;
+using AllegroConnector.Infrastructure.Configuration.Processing.Outbox;
 using Autofac;
 using Quartz;
 using Quartz.Impl;
@@ -28,17 +29,16 @@ namespace AllegroConnector.Infrastructure.Configuration.Quartz
 
             scheduler.Start().GetAwaiter().GetResult();
 
-            //var processOffersJob = JobBuilder.Create<ProcessOffersJob>().Build();
-            //var processOffersTrigger = TriggerBuilder
-            //    .Create()
-            //    .StartNow()
-            //    .WithCronSchedule("5 * * ? * *")
-            //    .Build();
+            var processOffersJob = JobBuilder.Create<ProcessOffersJob>().Build();
+            var processOffersTrigger = TriggerBuilder
+                .Create()
+                .StartNow()
+                .WithCronSchedule("0 0 * ? * *")
+                .Build();
 
-            //scheduler.ScheduleJob(processOffersJob, processOffersTrigger);
+            scheduler.ScheduleJob(processOffersJob, processOffersTrigger);
 
             var processInternalCommandsJob = JobBuilder.Create<ProcessInternalCommandsJob>().Build();
-
             ITrigger triggerCommandsProcessing =
                     TriggerBuilder
                         .Create()
@@ -60,6 +60,17 @@ namespace AllegroConnector.Infrastructure.Configuration.Quartz
             scheduler
                 .ScheduleJob(processInboxJob, processInboxTrigger)
                 .GetAwaiter().GetResult();
+
+
+            var processOutboxJob = JobBuilder.Create<ProcessOutboxJob>().Build();
+            ITrigger trigger;
+            trigger =
+                TriggerBuilder
+                    .Create()
+                    .StartNow()
+                    .WithCronSchedule("0/2 * * ? * *")
+                    .Build();
+            scheduler.ScheduleJob(processOutboxJob, trigger).GetAwaiter().GetResult();
 
             _logger.Information("Quartz started.");
         }

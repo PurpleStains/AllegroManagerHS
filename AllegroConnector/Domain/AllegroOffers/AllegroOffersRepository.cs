@@ -37,5 +37,9 @@ namespace AllegroConnector.Infrastructure.Domain.AllegroOffers
             await _context.SaveChangesAsync();
         }
 
+        public async Task<AllegroOffer> GetByEanAsync(string ean)
+        {
+            return await _context.AllegroOffers.FirstOrDefaultAsync(x => x.EAN.Equals(ean));
+        }
     }
 }

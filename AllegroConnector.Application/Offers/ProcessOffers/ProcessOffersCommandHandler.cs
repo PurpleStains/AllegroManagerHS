@@ -1,21 +1,32 @@
 ﻿using AllegroConnector.Application.Commands;
-using AllegroConnector.Domain;
-using AllegroConnector.Domain.Responses;
+using AllegroConnector.Application.Offers.Update;
+using AllegroConnector.BuildingBlocks.Application.Data;
+using AllegroConnector.Domain.Offer;
+using Dapper;
+
 
 namespace AllegroConnector.Application.Offers.ProcessOffers
 {
-    internal class ProcessOffersCommandHandler(IAllegroApiService api) : ICommandHandler<ProcessOffersCommand>
+    internal class ProcessOffersCommandHandler(
+        ICommandsScheduler scheduler,
+        ISqlConnectionFactory sqlConnectionFactory) : ICommandHandler<ProcessOffersCommand>
     {
         public async Task Handle(ProcessOffersCommand request, CancellationToken cancellationToken)
         {
-            //int offset = 0; // Start from 0 and then apply offset from request
-            //var result = new List<SaleOffersResponse>();
-            //for (var i = 0; i < request.Limit / request.Offset; i++)
-            //{
-            //    var response = await api.SaleOffers(offset.ToString(), request.Limit.ToString());
-            //    result.Add( response);
-            //    offset += request.Offset;
-            //}
+            var connection = sqlConnectionFactory.GetOpenConnection();
+
+            const string sql = $"""
+                                SELECT 
+                                    [offers].[AllegroOffers].[AllegroOfferId] AS [{nameof(AllegroOffer.AllegroOfferId)}]
+                                FROM [offers].[AllegroOffers]
+                                """;
+
+            var offers = await connection.QueryAsync<Guid>(sql);
+
+            foreach (var offer in offers)
+            {
+                await scheduler.EnqueueAsync(new UpdateOfferCommand(Guid.NewGuid(), offer));
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AllegroConnector.BuildingBlocks.Domain;
-using AllegroConnector.Domain.Offer;
+﻿using AllegroConnector.Domain.Offer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,6 +17,11 @@ namespace AllegroConnector.Infrastructure.Domain.AllegroOffers
             builder.Property<string>("Name").HasColumnName("Name");
             builder.Property<int>("Stock").HasColumnName("Stock");
             builder.Property<string>("PriceGross").HasColumnName("PriceGross");
+            builder.Property(x => x.BuyPriceGross).HasColumnName("BuyPriceGross");
+            builder.Property(x => x.AllegroFee).HasColumnName("AllegroFee");
+            builder.Property(x => x.Margin).HasColumnName("Margin");
+            builder.Property(x => x.Income).HasColumnName("Income");
+            builder.Property(x => x.PackageFee).HasColumnName("PackageFee");
         }
     }
 }

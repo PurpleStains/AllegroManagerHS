@@ -1,5 +1,7 @@
 ﻿using AllegroConnector.Application.Offers.Create;
 using AllegroConnector.Application.Offers.Update;
+using AllegroConnector.Application.Offers.UpdateAllegroFee;
+using AllegroConnector.Application.Offers.UpdateBuyPrice;
 using AllegroConnector.Application.Validation;
 using AllegroConnector.BuildingBlocks.Infrastructure;
 using AllegroConnector.BuildingBlocks.Infrastructure.EventBus;
@@ -69,8 +71,11 @@ namespace AllegroConnector.Infrastructure.Configuration
             BiDictionary<string, Type> internalCommandsMap = new BiDictionary<string, Type>();
             internalCommandsMap.Add("CreateOfferCommand", typeof(CreateOfferCommand));
             internalCommandsMap.Add("UpdateOfferBuyPriceGrossCommand", typeof(UpdateOfferBuyPriceGrossCommand));
+            internalCommandsMap.Add("UpdateAllegroFeeOnStoredOfferCommand", typeof(UpdateAllegroFeeOnStoredOfferCommand));
+            internalCommandsMap.Add("UpdateOfferCommand", typeof(UpdateOfferCommand));
             containerBuilder.RegisterModule(new InternalCommandsModule(internalCommandsMap));
             var domainNotificationsMap = new BiDictionary<string, Type>();
+            domainNotificationsMap.Add("BuyPriceGrossUpdatedNotification", typeof(BuyPriceGrossUpdatedNotification));
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));
             containerBuilder.RegisterModule(new QuartzModule());
 

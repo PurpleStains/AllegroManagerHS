@@ -4,6 +4,7 @@ using AllegroConnector.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AllegroConnector.Infrastructure.Migrations
 {
     [DbContext(typeof(AllegroContext))]
-    partial class AllegroContextModelSnapshot : ModelSnapshot
+    [Migration("20240922111327_AddedMarginAndAllegroFeeColumnsOnOffer")]
+    partial class AddedMarginAndAllegroFeeColumnsOnOffer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,10 +131,6 @@ namespace AllegroConnector.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("EAN");
 
-                    b.Property<double>("Income")
-                        .HasColumnType("float")
-                        .HasColumnName("Income");
-
                     b.Property<double>("Margin")
                         .HasColumnType("float")
                         .HasColumnName("Margin");
@@ -145,10 +144,6 @@ namespace AllegroConnector.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("OfferId");
-
-                    b.Property<double>("PackageFee")
-                        .HasColumnType("float")
-                        .HasColumnName("PackageFee");
 
                     b.Property<string>("PriceGross")
                         .HasColumnType("nvarchar(max)")

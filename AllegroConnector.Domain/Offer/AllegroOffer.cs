@@ -1,8 +1,10 @@
-﻿using AllegroConnector.Domain.Orders;
+﻿using AllegroConnector.BuildingBlocks.Domain;
+using AllegroConnector.Domain.Offer.Events;
+using AllegroConnector.Domain.Orders;
 
 namespace AllegroConnector.Domain.Offer
 {
-    public class AllegroOffer
+    public class AllegroOffer : Entity, IAggregateRoot
     {
         public Guid AllegroOfferId { get; private set; }
         public string OfferId { get; private set; }
@@ -12,6 +14,11 @@ namespace AllegroConnector.Domain.Offer
         public int Stock { get; private set; }
         public string PublicationStatus { get; private set; }
         public string? PriceGross { get; private set; }
+        public double BuyPriceGross { get; private set; }
+        public double AllegroFee { get; private set; }
+        public double PackageFee { get; private set; }
+        public double Income { get; private set; }
+        public double Margin { get; private set; }
 
         public virtual ICollection<OrderLineItem> OrderLineItems { get; private set; } = new List<OrderLineItem>();
 
@@ -60,5 +67,40 @@ namespace AllegroConnector.Domain.Offer
             return offer;
         }
 
+        public void UpdatePriceGross(string price)
+        {
+            if (PriceGross.Equals(price)) return;
+
+            PriceGross = price;
+
+            this.AddDomainEvent(new BuyPriceGrossUpdatedDomainEvent(AllegroOfferId));
+        }
+
+        public void UpdateBuyPriceGross(double price)
+        {
+            BuyPriceGross = price;
+
+            this.AddDomainEvent(new BuyPriceGrossUpdatedDomainEvent(AllegroOfferId));
+        }
+
+        public void UpdateAllegroFee(double fee)
+        {
+            AllegroFee = fee;
+        }
+
+        public void UpdateMargin(double margin) 
+        {
+            Margin = margin;
+        }
+
+        public void UpdateIncome(double income) 
+        { 
+            Income = income; 
+        }
+
+        public void UpdatePackageFee(double fee)
+        {
+            PackageFee = fee;
+        }
     }
 }

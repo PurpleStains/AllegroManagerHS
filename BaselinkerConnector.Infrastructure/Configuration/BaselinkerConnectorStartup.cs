@@ -70,6 +70,7 @@ namespace BaselinkerConnector.Infrastructure.Configuration
 
             var domainNotificationsMap = new BiDictionary<string, Type>();
             domainNotificationsMap.Add("ProductCreatedNotification", typeof(ProductCreatedNotification));
+            domainNotificationsMap.Add("ProductBuyPriceUpdatedNotification", typeof(ProductBuyPriceUpdatedNotification));
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));
             containerBuilder.RegisterModule(new QuartzModule());
 

@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AllegroConnector.Domain.OAuthToken;
+using FluentResults;
 
 namespace AllegroConnector.Application.AllegroAuthorization
 {
@@ -6,5 +7,6 @@ namespace AllegroConnector.Application.AllegroAuthorization
     {
         Task<Result<AuthDeviceOAuth>> GetCode();
         Task<Result<AuthResponse>> GetAccessToken(int interval, string deviceCode, CancellationToken token);
+        Task<Result<AuthResponse>> RefreshToken(AllegroOAuthToken credential, CancellationToken token);
     }
 }
