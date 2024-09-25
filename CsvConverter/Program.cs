@@ -1,7 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml;
 
 Console.WriteLine("Enter IDs (one per line). Press Enter on an empty line to finish:");
 
