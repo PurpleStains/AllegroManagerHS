@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
     allegromanager:
         image: ${DOCKER_REGISTRY-}allegromanager
@@ -10,6 +8,7 @@ services:
         depends_on:
             db:
                 condition: service_healthy
+
     db:
         image: mcr.microsoft.com/mssql/server:2022-latest
         healthcheck:
@@ -31,5 +30,24 @@ services:
         - ./AllegroManager.Database.Build:/sql-scripts
         - ./entrypoint.sh:/entrypoint.sh 
         command: /bin/bash /entrypoint.sh
+
+    next-app:
+        container_name: next-app
+        build:
+            context: ./UI/integration-portal//next-app
+            dockerfile: prod.Dockerfile
+            args:
+                ENV_VARIABLE: ${ENV_VARIABLE}
+                NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+        restart: always
+        ports:
+        - 3001:3000
+        networks:
+        - my_network
+
+
 volumes:
-    my-db:    
+    my-db:
+
+networks:
+  my_network:
