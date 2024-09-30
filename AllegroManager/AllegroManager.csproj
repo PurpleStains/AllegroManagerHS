@@ -43,13 +43,4 @@
     <ProjectReference Include="..\BaselinkerConnector.Infrastructure\BaselinkerConnector.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="AllegroAukcje\export %282%29.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="AllegroCeny\Test_1_2024-05-05_19_07.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
