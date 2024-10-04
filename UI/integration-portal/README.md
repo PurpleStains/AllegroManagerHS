@@ -37,8 +37,7 @@ create env file with:
 KEYCLOAK_CLIENT_ID="
 KEYCLOAK_CLIENT_SECRET=
 KEYCLOAK_ISSUER=
-```
-
+```s
 
 ```npx auth
 run command: npx auth secret to generate auth secret for app.

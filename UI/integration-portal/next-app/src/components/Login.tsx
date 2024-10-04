@@ -1,7 +1,9 @@
 "use client"
 import { signIn } from "next-auth/react";
+import { Button } from "./ui/Button";
+
 export default function Login() {
-  return <button onClick={() => signIn("keycloak")}>
-    Signin with keycloak
-  </button>
+  return <Button className="text-white"  onClick={() => signIn("keycloak")}>
+    Signin
+  </Button>
 }
