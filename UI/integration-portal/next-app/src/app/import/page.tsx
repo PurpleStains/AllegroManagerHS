@@ -1,23 +1,21 @@
 'use client';
 
 import { useState } from 'react';
+import { importIdentifiers } from '../../services/saleService';
 
 const ImportPage = () => {
     const [identifiers, setIdentifiers] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
-    // Function to handle form submission
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null);
         setSuccess(null);
 
-        // Split input by newlines or commas to get array of identifiers
         const idArray = identifiers.split(/\s+|,/).filter(Boolean);  // Split by space or comma
         const numericIds = idArray.map(id => Number(id));
 
-        // Check if all identifiers are valid 13-digit numbers
         const isValid = numericIds.every(id => !isNaN(id) && id.toString().length === 11);
 
         if (!isValid) {
@@ -25,24 +23,13 @@ const ImportPage = () => {
             return;
         }
 
-        try {
-            // Send POST request to the API
-            const response = await fetch('http://localhost:8081/api/myallegro/sale/import', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ Offers: idArray }),
-            });
+        const result = await importIdentifiers(idArray);
 
-            if (!response.ok) {
-                throw new Error('Failed to import identifiers.');
-            }
-
-            setSuccess('Identifiers successfully imported!');
-            setIdentifiers('');  // Clear the input field after success
-        } catch (err) {
-            setError((err as Error).message);
+        if (result.success) {
+            setSuccess(result.message);
+            setIdentifiers('');
+        } else {
+            setError(result.message);
         }
     };
 
