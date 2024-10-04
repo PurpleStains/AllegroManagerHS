@@ -32,6 +32,17 @@ Optionally, after the installation is complete:
 
 It is recommended to commit a lockfile to version control. Although the example will work without one, build errors are more likely to occur when using the latest version of all dependencies. This way, we're always using a known good configuration to develop and run in production.
 
+```environment varialbes
+create env file with:
+KEYCLOAK_CLIENT_ID="
+KEYCLOAK_CLIENT_SECRET=
+KEYCLOAK_ISSUER=
+```
+
+
+```npx auth
+run command: npx auth secret to generate auth secret for app.
+```
 ## Prerequisites
 
 Install [Docker Desktop](https://docs.docker.com/get-docker) for Mac, Windows, or Linux. Docker Desktop includes Docker Compose as part of the installation.
