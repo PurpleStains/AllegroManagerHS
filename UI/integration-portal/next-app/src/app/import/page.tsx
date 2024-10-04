@@ -18,21 +18,21 @@ const ImportPage = () => {
         const numericIds = idArray.map(id => Number(id));
 
         // Check if all identifiers are valid 13-digit numbers
-        const isValid = numericIds.every(id => !isNaN(id) && id.toString().length === 13);
+        const isValid = numericIds.every(id => !isNaN(id) && id.toString().length === 11);
 
         if (!isValid) {
-            setError('Please enter only valid 13-digit numeric identifiers.');
+            setError('Please enter only valid 11-digit numeric identifiers.');
             return;
         }
 
         try {
             // Send POST request to the API
-            const response = await fetch('/api/sale/import', {
+            const response = await fetch('http://localhost:8081/api/myallegro/sale/import', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ identifiers: numericIds }),
+                body: JSON.stringify({ Offers: idArray }),
             });
 
             if (!response.ok) {
@@ -53,7 +53,7 @@ const ImportPage = () => {
                 <textarea
                     value={identifiers}
                     onChange={(e) => setIdentifiers(e.target.value)}
-                    placeholder="Enter 13-digit numeric identifiers (comma or newline separated)"
+                    placeholder="Enter 11-digit numeric identifiers (comma or newline separated)"
                     rows={5}
                     className="border p-2 rounded"
                 />
