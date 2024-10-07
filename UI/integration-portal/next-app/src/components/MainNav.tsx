@@ -6,12 +6,10 @@ import Header from "./Header";
 import { MenuItems } from "./MenuLinks/MenuItems";
 import { signOutUser } from "../lib/signout";
 import { getCurrentUserSession } from "../app/api/auth/session";
-import { useRouter } from "next/navigation";
 
 const MainNav = () => {
     const [session, setSession] = useState<Session | null>();
     const title = "Integration Portal"
-    const router = useRouter(); 
     
     const handleLogout = async () => {
         await signOutUser();

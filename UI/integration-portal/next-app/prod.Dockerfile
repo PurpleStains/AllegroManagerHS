@@ -20,6 +20,8 @@ COPY src ./src
 COPY public ./public
 COPY next.config.js .
 COPY tsconfig.json .
+COPY tailwind.config.js .
+COPY postcss.config.js .
 
 # Environment variables must be present at build time
 # https://github.com/vercel/next.js/discussions/14030
@@ -27,6 +29,18 @@ ARG ENV_VARIABLE
 ENV ENV_VARIABLE=${ENV_VARIABLE}
 ARG NEXT_PUBLIC_ENV_VARIABLE
 ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
+
+ARG ENV_VARIABLE_KEYCLOAK_CLIENT_ID
+ENV ENV_VARIABLE_KEYCLOAK_CLIENT_ID=${ENV_VARIABLE_KEYCLOAK_CLIENT_ID}
+
+ARG ENV_VARIABLE_KEYCLOAK_CLIENT_SECRET
+ENV ENV_VARIABLE_KEYCLOAK_CLIENT_SECRET=${ENV_VARIABLE_KEYCLOAK_CLIENT_SECRET}
+
+ARG ENV_VARIABLE_KEYCLOAK_ISSUER
+ENV ENV_VARIABLE_KEYCLOAK_ISSUER=${ENV_VARIABLE_KEYCLOAK_ISSUER}
+
+ARG NEXTAUTH_SECRET
+ENV NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
 
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
