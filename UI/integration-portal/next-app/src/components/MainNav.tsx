@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import Header from "./Header";
 import { MenuItems } from "./MenuLinks/MenuItems";
 import { signOutUser } from "../lib/signout";
-import { getCurrentUserSession } from "../app/api/auth/session";
+import { getAuthSession } from "../app/api/auth/session";
 
 const MainNav = () => {
     const [session, setSession] = useState<Session | null>();
@@ -18,7 +18,7 @@ const MainNav = () => {
     useEffect(() => {
   
       const loadSession = async () => {
-        const result = await getCurrentUserSession();
+        const result = await getAuthSession();
         setSession(result);
       };
   

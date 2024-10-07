@@ -6,7 +6,7 @@ import { NavigationLink } from "../PortalNavigationMenuItem";
 export function MenuItems() {
 
     const links: NavigationLink[] = [
-        { href: '/',  title: "Dashboard" },
+        { href: '/dashboard',  title: "Dashboard" },
         { href: '/import',  title: "Import" },
     ]
 

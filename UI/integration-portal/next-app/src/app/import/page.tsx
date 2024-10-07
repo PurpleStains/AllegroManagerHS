@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { importIdentifiers } from '../../services/saleService';
 
-const ImportPage = () => {
+export default function ImportPage() {
     const [identifiers, setIdentifiers] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
@@ -53,5 +53,3 @@ const ImportPage = () => {
         </div>
     );
 };
-
-export default ImportPage;
