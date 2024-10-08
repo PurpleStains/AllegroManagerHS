@@ -1,16 +1,18 @@
-import { Headset, LifeBuoy, LockKeyholeOpen, Settings } from "lucide-react";
+import { Cable, Headset, Settings } from "lucide-react";
 import Header from "./Header";
 import { MenuItems } from "./MenuLinks/MenuItems";
 import { MenuItem } from "./PortalMenu/PortalMenu";
+import { useRouter } from "next/navigation";
 
 const MainNav = () => {
+  const router = useRouter();
   const title = "Integration Portal"
 
   const items: MenuItem[] = [
     {
-      label: "Settings",
+      label: "Options",
       icon: <Settings />,
-      onClick: () => { }
+      onClick: () => { router.push('/options/main') }
     },
     {
       label: "Contact",
