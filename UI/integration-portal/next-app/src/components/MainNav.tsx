@@ -1,36 +1,30 @@
-'use client'
-
-import { Session } from "next-auth"
-import { useEffect, useState } from "react"
+import { Headset, LifeBuoy, LockKeyholeOpen, Settings } from "lucide-react";
 import Header from "./Header";
 import { MenuItems } from "./MenuLinks/MenuItems";
-import { signOutUser } from "../lib/signout";
-import { getAuthSession } from "../app/api/auth/session";
+import { MenuItem } from "./PortalMenu/PortalMenu";
 
 const MainNav = () => {
-    const [session, setSession] = useState<Session | null>();
-    const title = "Integration Portal"
-    
-    const handleLogout = async () => {
-        await signOutUser();
-    };
+  const title = "Integration Portal"
 
-    useEffect(() => {
-  
-      const loadSession = async () => {
-        const result = await getAuthSession();
-        setSession(result);
-      };
-  
-      loadSession();
-    },[]);
+  const items: MenuItem[] = [
+    {
+      label: "Settings",
+      icon: <Settings />,
+      onClick: () => { }
+    },
+    {
+      label: "Contact",
+      icon: <Headset />,
+      onClick: () => { },
+    },
+  ]
 
-    return (
-        <Header
-            title={title}
-            links={MenuItems()}
-            logoutAction={handleLogout} />
-    )
+  return (
+    <Header
+      title={title}
+      links={MenuItems()}
+      menuItems={items} />
+  )
 }
 
 export default MainNav

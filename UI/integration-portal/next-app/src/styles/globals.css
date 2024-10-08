@@ -2,6 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --portal: 95 39% 68%; /* Updated to match #95C789 */
+    --portal-highlight: 95 70% 45%;
+    --background: 100 50% 95%; /* Light pistachio background */
+    --foreground: 90 60% 20%; /* Deep green for text */
+    --card: 100 50% 97%;
+    --card-foreground: 90 60% 20%;
+    --popover: 100 50% 97%;
+    --popover-foreground: 90 60% 20%;
+    --primary: 95 60% 35%; /* Main pistachio */
+    --primary-foreground: 95 80% 95%; /* Light green text */
+    --secondary: 95 40% 85%;
+    --secondary-foreground: 90 60% 20%;
+    --muted: 100 45% 85%;
+    --muted-foreground: 90 45% 45%;
+    --accent: 95 60% 40%; /* Richer pistachio accent */
+    --accent-foreground: 95 80% 95%;
+    --destructive: 5 60% 55%; /* A reddish tone for contrast */
+    --destructive-foreground: 95 80% 95%;
+    --border: 95 40% 85%;
+    --input: 95 40% 85%;
+    --ring: 90 60% 20%;
+    --radius: 0.5rem;
+    --chart-1: 95 70% 40%;
+    --chart-2: 95 60% 50%;
+    --chart-3: 100 45% 35%;
+    --chart-4: 85 75% 55%;
+    --chart-5: 75 80% 60%;
+  }
+
+  .dark {
+    --portal: 95 39% 68%; /* Same adjustment for dark mode */
+    --background: 90 40% 15%; /* Dark pistachio background */
+    --foreground: 95 80% 90%;
+    --card: 90 40% 15%;
+    --card-foreground: 95 80% 90%;
+    --popover: 90 40% 15%;
+    --popover-foreground: 95 80% 90%;
+    --primary: 95 80% 90%; /* Light green */
+    --primary-foreground: 90 60% 15%;
+    --secondary: 100 30% 25%;
+    --secondary-foreground: 95 80% 90%;
+    --muted: 100 30% 25%;
+    --muted-foreground: 95 40% 65%;
+    --accent: 100 30% 25%;
+    --accent-foreground: 95 80% 90%;
+    --destructive: 5 60% 40%;
+    --destructive-foreground: 95 80% 90%;
+    --border: 100 30% 25%;
+    --input: 100 30% 25%;
+    --ring: 90 50% 30%;
+    --chart-1: 100 70% 40%;
+    --chart-2: 90 60% 50%;
+    --chart-3: 85 75% 55%;
+    --chart-4: 120 45% 60%;
+    --chart-5: 110 55% 50%;
+  }
+}
+
+
 html,
 body {
   padding: 0;

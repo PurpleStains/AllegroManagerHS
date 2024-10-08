@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { importIdentifiers } from '../../services/saleService';
+import { Button } from '../../components/ui/Button';
 
 export default function ImportPage() {
     const [identifiers, setIdentifiers] = useState<string>('');
@@ -46,9 +47,9 @@ export default function ImportPage() {
                 />
                 {error && <p className="text-red-500">{error}</p>}
                 {success && <p className="text-green-500">{success}</p>}
-                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
+                <Button type="submit" className="py-2 px-4 rounded">
                     Submit
-                </button>
+                </Button>
             </form>
         </div>
     );

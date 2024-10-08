@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "../components/ui/Button";
 
 export default function Home() {
     return (
@@ -11,8 +12,10 @@ export default function Home() {
             <br />
             Sign in to take advantage of this product.
           </p>
-          <Link href="/api/auth/signin" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-              Sign In
+          <Link href="/api/auth/signin" className="px-4 py-2 rounded">
+              <Button>
+                Sign In
+              </Button>
           </Link>
         </div>
       );

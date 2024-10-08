@@ -49,7 +49,7 @@ const MenuContentItemStyles = `
     text-white
     transition-colors
 `
-const activeStyle = `bg-ticketer-highlight hover:bg-ticketer-highlight data-[state=open]:bg-ticketer-highlight `
+const activeStyle = `bg-portal-highlight hover:bg-portal-highlight data-[state=open]:bg-portal-highlight `
 const unactiveStyle = `bg-transparent hover:bg-accent/50 data-[state=open]:bg-accent/50`
 
 const PortalNavigationMenuItem = ({ item }: NavigationItemProps) => {

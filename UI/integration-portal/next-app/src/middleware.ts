@@ -14,5 +14,5 @@ export async function middleware(req: NextRequest) {
   }
   
 export const config = {
-  matcher: ["/import"], // Add paths that require authentication
+  matcher: ["/import/:path*", "/dashboard/:path*"],
 };
