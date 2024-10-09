@@ -9,7 +9,7 @@ namespace AllegroManager.Modules.Allegro
 {
     [ApiController]
     [Route("api/myallegro/[controller]")]
-    [AllowAnonymous]
+    [Authorize]
     public class SaleController(IAllegroModule allegroModule) : ControllerBase
     {
 

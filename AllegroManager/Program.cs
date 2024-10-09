@@ -1,4 +1,3 @@
-using AllegroConnector.Application.AllegroApi;
 using AllegroConnector.Application.AllegroOAuth;
 using AllegroConnector.Infrastructure;
 using AllegroConnector.Infrastructure.Configuration;
@@ -8,6 +7,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using BaselinkerConnector.Infrastructure;
 using BaselinkerConnector.Infrastructure.Configuration;
+using Keycloak.AuthServices.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Net.Http.Headers;
@@ -32,7 +32,6 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new BaselinkerAutoFacModule()));
 
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
@@ -47,12 +46,15 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "MyPolicy",
         policy =>
         {
-            policy//.WithOrigins("http://localhost/3000")
+            policy.WithOrigins("http://localhost:3001")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowAnyOrigin();
+                    .AllowCredentials();
         });
 });
+
+builder.Services.AddAuthorization();
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
 
 var app = builder.Build();
 var container = app.Services.GetAutofacRoot();
@@ -66,9 +68,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
-//app.UseAuthorization();
+
 app.UseCors("MyPolicy");
 app.MapControllers();
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();
 
 Serilog.ILogger ConfigureLogger()
