@@ -24,7 +24,15 @@ export default function ImportPage() {
             return;
         }
 
-        const result = await importIdentifiers(idArray);
+        const response = await fetch("/api/import-identifiers", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ idArray }),
+        });
+
+        const result = await response.json();
 
         if (result.success) {
             setSuccess(result.message);
