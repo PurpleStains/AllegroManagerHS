@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../lib/next-auth-options";
 
-export const POST = async (req: Request) => {
-  const secret = process.env.NEXTAUTH_SECRET;
+export const POST = async (req: NextRequest) => {
 
   try {
-    const token = await getToken({ req, secret });
-    if (!token) {
+    const session = await getServerSession(authOptions);
+    if (!session?.access_token) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
         { status: 401 }
@@ -14,14 +14,13 @@ export const POST = async (req: Request) => {
     }
 
     const { idArray } = await req?.json();
-
     const apiResponse = await fetch(
       "http://localhost:5195/api/myallegro/sale/import",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.access_token}`,
         },
         body: JSON.stringify({ offers: idArray }),
       }
